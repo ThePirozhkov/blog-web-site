@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration Page</title>
+    <link th:href="@{/css/reg.css}" rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/reg}" method="post">
-    <label for="username"> Имя пользователя:
-        <input type="text" name="username" id="username">
-    </label><br>
-    <label for="password"> Пароль:
-        <input type="password" name="password" id="password">
-    </label><br>
-    <label for="email"> E-mail:
-        <input type="text" name="email" id="email">
-    </label><br>
-    <button type="submit">Подтвердить</button>
+<div id="registration_header">
+    <h1>Регистрация</h1>
+</div>
+<div id="reg">
+    <form id="reg_form" th:action="@{/reg}" method="post">
+        <p>Имя пользователя:</p>
+        <label for="username">
+            <input type="text" name="username" id="username">
+        </label>
+        <p>Пароль:</p>
+        <label for="password">
+            <input type="password" name="password" id="password">
+        </label>
+        <p>E-mail:</p>
+        <label for="email">
+            <input type="text" name="email" id="email">
+        </label>
+        <button id="reg_button" type="submit">Подтвердить</button>
 </form>
+</div>
 </body>
 </html>

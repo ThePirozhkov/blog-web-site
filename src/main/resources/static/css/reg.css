@@ -1,0 +1,62 @@
+body {
+    background-image: url("/images/main_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+}
+
+p {
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+input {
+    display: block;
+    width: 100%;
+    border: 3px;
+    background-color: lightgray;
+    max-width: 500px; /* Ограничение на максимальную ширину */
+}
+
+#registration_header {
+    background-color: chocolate;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#reg_form {
+    padding-top: 1cm;
+    border: 5px orange;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+#reg {
+    width: 500px;
+    margin-top: 5cm;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: chocolate;
+}
+
+#reg_button {
+    background-color: lightgray;
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: 1cm;
+    border: 0;
+}
+
+#reg_button:hover {
+    background-color: dimgray;
+    cursor: pointer;
+}
