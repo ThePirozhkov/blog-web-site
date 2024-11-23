@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,7 +25,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registerPost(@ModelAttribute RegistrationDto registrationDto) {
+    public String registerPost(@ModelAttribute @Validated RegistrationDto registrationDto) {
         LOGGER.info("registrationDto: {}", registrationDto);
         userService.save(registrationDto);
         return "redirect:/login?reg";
