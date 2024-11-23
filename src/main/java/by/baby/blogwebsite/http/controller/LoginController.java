@@ -1,18 +1,16 @@
 package by.baby.blogwebsite.http.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/main")
-public class MainPageController {
+@RequestMapping("/login")
+public class LoginController {
 
     @GetMapping
-    public String mainPage(Model model) {
-        return "main/main";
+    public String login() {
+        return "login/login";
     }
 
 }

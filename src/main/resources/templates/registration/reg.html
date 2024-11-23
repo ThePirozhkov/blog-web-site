@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Page</title>
+</head>
+<body>
+<form th:action="@{/reg}" method="post">
+    <label for="username"> Имя пользователя:
+        <input type="text" name="username" id="username">
+    </label><br>
+    <label for="password"> Пароль:
+        <input type="password" name="password" id="password">
+    </label><br>
+    <label for="email"> E-mail:
+        <input type="text" name="email" id="email">
+    </label><br>
+    <button type="submit">Подтвердить</button>
+</form>
+</body>
+</html>

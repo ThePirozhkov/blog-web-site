@@ -1,0 +1,11 @@
+#authorization_header {
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#logout_success {
+    color: green;
+    margin: 0;
+}

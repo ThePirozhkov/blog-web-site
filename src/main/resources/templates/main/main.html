@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
+    <link th:href="@{/css/main.css}" th:rel="stylesheet">
 </head>
 <body>
-<h1 style="background-color: orange">Pet Project www.blogwebsite.com
-    <span th:if="${param.continue!=null}" style="color: green; margin: 0">Авторизация прошла успешно!</span></h1>
+<div id="head">
+    <h1>Пэт проект www.blogwebsite.com
+        <span id="login_success" th:if="${param.login!=null}">Авторизация прошла успешно!</span>
+    </h1>
+    <div th:replace="~{fragments/fragment.html :: logout}"></div>
+</div>
 </body>
 </html>

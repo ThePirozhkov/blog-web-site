@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link th:href="@{/css/login.css}" th:rel="stylesheet">
+</head>
+<body>
+<div id="authorization_header">
+    <h1>
+        Авторизация <span id="logout_success" th:if="${param.logout!=null}">Вы успешно вышли!</span>
+    </h1>
+</div>
+<form th:action="@{/login}" method="post">
+    <label for="username">Username:
+        <input id="username" name="username" type="text">
+    </label><br>
+    <label for="password">Password:
+        <input id="password" name="password" type="password">
+    </label><br>
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>

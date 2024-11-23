@@ -1,0 +1,11 @@
+#head {
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#login_success {
+    color: green;
+    margin: 0;
+}
