@@ -1,5 +1,12 @@
+body {
+    background-image: url("/images/main_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 #authorization_header {
-    background-color: orange;
+    background-color: chocolate;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -21,6 +28,7 @@
 }
 
 .reg_log_buttons {
+    background-color: lightgray;
     width: 100%;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -37,7 +45,9 @@
 }
 
 input {
+    border: 3px;
     width: 100%;
+    background-color: lightgray;
 }
 
 #login_form {
