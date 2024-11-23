@@ -11,14 +11,22 @@
         Авторизация <span id="logout_success" th:if="${param.logout!=null}">Вы успешно вышли!</span>
     </h1>
 </div>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username:
-        <input id="username" name="username" type="text">
-    </label><br>
-    <label for="password">Password:
-        <input id="password" name="password" type="password">
-    </label><br>
-    <button type="submit">Login</button>
-</form>
+<div id="login">
+    <p id="unknown_pass_login" th:if="${param.error!=null}">Неправильный пароль или имя пользователя</p>
+    <form id="login_form" th:action="@{/login}" method="post">
+        <p>Имя пользователя:</p>
+        <label for="username">
+            <input id="username" name="username" type="text">
+        </label>
+        <p>Пароль:</p>
+        <label for="password">
+            <input id="password" name="password" type="password">
+        </label>
+        <div id="buttons">
+            <a id="reg_a_button" href="reg"><button class="reg_log_buttons" id="reg_button" type="button">Регистрация</button></a>
+            <button class="reg_log_buttons" id="login_button" type="submit">Войти</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

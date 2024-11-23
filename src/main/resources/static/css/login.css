@@ -5,6 +5,60 @@
     justify-content: space-around;
 }
 
+#login {
+    width: 20%;
+    margin-top: 5cm;
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: chocolate;
+}
+
+#buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.reg_log_buttons {
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0;
+}
+
+.reg_log_buttons:hover {
+    background-color: dimgray;
+    cursor: pointer;
+}
+
+#reg_a_button {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+}
+
+#login_form {
+    border: 5px orange;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+#unknown_pass_login {
+    color: white;
+    text-align: center;
+}
+
 #logout_success {
     color: green;
     margin: 0;
