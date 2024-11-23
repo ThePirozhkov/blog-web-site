@@ -29,7 +29,6 @@ input {
 }
 
 #reg_form {
-    padding-top: 1cm;
     border: 5px orange;
     display: flex;
     flex-wrap: wrap;
@@ -52,7 +51,7 @@ input {
     width: 100%;
     padding-bottom: 10px;
     padding-top: 10px;
-    margin-top: 1cm;
+    margin-top: 10px;
     border: 0;
 }
 

@@ -9,12 +9,13 @@ import lombok.Data;
 
 @Data
 public final class RegistrationDto {
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть пустым!")
     @UniqueUsername
     private String username;
-    @Size(min = 8, max = 40)
+    @Size(min = 8, max = 40, message = "Длина пароля должна быть в диапазоне от 8 до 40!")
     private String password;
-    @Email
+    @NotBlank(message = "E-mail не должен быть пустым!")
+    @Email(message = "Должен иметь формат E-mail!")
     @UniqueEmail
     private String email;
 }
