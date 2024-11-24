@@ -37,4 +37,17 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Cannot save user"));
     }
 
+    public UserDto update(UserDto newUserDto, String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    user.setUsername(newUserDto.getUsername());
+                    user.setPassword(passwordEncoder.encode(newUserDto.getPassword()));
+                    user.setEmail(newUserDto.getEmail());
+                    user.setRole(newUserDto.getRole());
+                    return user;
+                })
+                .map(userDtoMapper::mapToUserDto)
+                .orElseThrow(() -> new RuntimeException("Cannot update user"));
+    }
+
 }

@@ -94,3 +94,8 @@ p {
     color: green;
     margin: 0;
 }
+
+#restored_success {
+    color: green;
+    margin: 0;
+}

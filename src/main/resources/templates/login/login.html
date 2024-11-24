@@ -9,6 +9,7 @@
 <div id="authorization_header">
     <h1>
         Авторизация <span id="logout_success" th:if="${param.logout!=null}">Вы успешно вышли!</span>
+                    <span id="restored_success" th:if="${param.restored!=null}">Доступ восстановлен!</span>
     </h1>
 </div>
 <div id="login">
