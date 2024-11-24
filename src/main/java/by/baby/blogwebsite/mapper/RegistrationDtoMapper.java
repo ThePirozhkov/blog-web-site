@@ -10,11 +10,10 @@ public class RegistrationDtoMapper {
 
     public UserEntity mapToUserEntity(RegistrationDto registrationDto) {
         return new UserEntity(
-                null,
-                registrationDto.getUsername(),
-                registrationDto.getPassword(),
+                Role.USER,
                 registrationDto.getEmail(),
-                Role.USER);
+                registrationDto.getPassword(),
+                registrationDto.getUsername());
     }
 
 }

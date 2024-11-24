@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/v1.0.0/create-user-table.sql
   - include:
       file: db/changelog/v1.0.0/insert-test-entity.sql
+  - include:
+      file: db/changelog/v1.0.1/add-column-restore-key.sql

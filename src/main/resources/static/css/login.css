@@ -31,6 +31,22 @@ body {
     width: 100%;
 }
 
+#restore:active,
+#restore {
+    text-decoration: none;
+    color: white;
+    padding-left: 9cm;
+}
+
+#restore:hover {
+    color: lightgray;
+}
+
+#restore_p {
+    display: inline-block;
+    padding: 0;
+}
+
 .reg_log_buttons {
     background-color: lightgray;
     width: 100%;

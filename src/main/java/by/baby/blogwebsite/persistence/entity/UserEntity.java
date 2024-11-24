@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,10 +35,18 @@ public class UserEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Column(name = "restorekey", nullable = false, unique = true)
+    private String restoreKey;
+
     public UserEntity(Role role, String email, String password, String username) {
         this.role = role;
         this.email = email;
         this.password = password;
         this.username = username;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.restoreKey = UUID.randomUUID().toString();
     }
 }

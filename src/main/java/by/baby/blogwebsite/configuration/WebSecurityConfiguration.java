@@ -27,7 +27,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/login", "/logout", "/reg").permitAll()
+                                .requestMatchers("/login", "/logout", "/reg", "/restore").permitAll()
                                 .requestMatchers("/main").hasAnyAuthority(Role.USER.getAuthority(), Role.ADMIN.getAuthority()))
                 .formLogin(form -> form.loginPage("/login")
                         .defaultSuccessUrl("/main?login", true)
