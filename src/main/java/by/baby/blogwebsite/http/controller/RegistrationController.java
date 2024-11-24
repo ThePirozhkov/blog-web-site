@@ -5,11 +5,17 @@ import by.baby.blogwebsite.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/reg")
@@ -32,6 +38,13 @@ public class RegistrationController {
                                Model model) {
         LOGGER.info("registrationDto: {}", registrationDto);
         if (bindingResult.hasErrors()) {
+            List<String> errorCodes = bindingResult.getAllErrors()
+                    .stream()
+                            .map(ObjectError::getCode)
+                            .toList();
+            LOGGER.error("error codes: {}", errorCodes);
+            model.addAttribute("hasPassConfirmError",
+                    errorCodes.contains("ConfirmPassword"));
             model.addAttribute("registrationDto", registrationDto);
             return "registration/reg";
         }

@@ -21,6 +21,11 @@
         <label for="password">
             <input type="password" name="password" id="password" th:field="*{password}">
         </label>
+        <p th:if="${hasPassConfirmError}">Пароль не совпадает!</p>
+        <p>Подтвердите пароль:</p>
+        <label for="confirmPassword">
+            <input type="password" name="confirmPassword" id="confirmPassword">
+        </label>
         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
         <p>E-mail:</p>
         <label for="email">
