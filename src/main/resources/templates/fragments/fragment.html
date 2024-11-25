@@ -1,13 +1,46 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Fragment</title>
 </head>
 <body>
-<div th:fragment="logout">
+<div id="buttons" th:fragment="logout (username)">
+    <style>
+        #logout_button {
+            background-color: lightgray;
+            width: 100%;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border-bottom: 0;
+            border-top: 0;
+            border-right: 0;
+            border-left: 1px solid chocolate;
+        }
+        #logout_button:hover {
+            background-color: dimgray;
+            cursor: pointer;
+        }
+        #user_button {
+            background-color: lightgray;
+            width: 100%;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border: 0;
+        }
+        #user_button:hover {
+            background-color: dimgray;
+            cursor: pointer;
+        }
+        #buttons {
+            display: flex;
+        }
+    </style>
+  <form th:action="@{/user}" method="get">
+      <button id="user_button" th:text="${username}">User</button>
+  </form>
   <form th:action="@{/logout}" method="post">
-    <button type="submit">Log out</button>
+    <button id="logout_button" type="submit">Log out</button>
   </form>
 </div>
 </body>

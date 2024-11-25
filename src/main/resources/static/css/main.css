@@ -1,8 +1,12 @@
 #head {
-    background-color: orange;
+    background-color: chocolate;
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+#title {
+    color: white;
 }
 
 #login_success {
