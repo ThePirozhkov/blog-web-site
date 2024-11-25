@@ -1,0 +1,61 @@
+body {
+    background-image: url("/images/main_background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+p {
+    color: white;
+    padding: 10px;
+    margin: 0;
+    max-width: 110px;
+    min-width: 110px;
+}
+
+a {
+    color: lightgray;
+    text-decoration: none;
+}
+
+#user_header {
+    background-color: chocolate;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+label {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.info_fields {
+    display: flex;
+    align-items: center;
+}
+
+h3 {
+    color: white;
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin-top: 5cm;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: chocolate;
+}
+
+input {
+    display: block;
+    width: 100%;
+    border: 3px;
+    background-color: lightgray;
+}

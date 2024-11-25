@@ -1,3 +1,11 @@
+body {
+    background-image: url("/images/main_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+}
+
 #head {
     background-color: chocolate;
     display: flex;

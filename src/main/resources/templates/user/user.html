@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+</head>
+<body>
+<div id="user_header">
+    <a th:href="@{/main}"><h1><</h1></a>
+  <h1>Пользователь <span th:text="${user.getUsername()}">User</span></h1>
+</div>
+<div id="info">
+    <div id="restore_field" class="info_fields">
+        <p th:if="${#authentication.name.equals(user.getUsername())}">Ключ восстановления:</p>
+        <label th:if="${#authentication.name.equals(user.getUsername())}">
+            <input type="text" readonly th:value="${user.getRestoreKey()}">
+        </label>
+    </div>
+    <div id="username" class="info_fields">
+        <p>Имя пользователя:</p>
+        <h3 th:text="${user.getUsername()}">Username</h3>
+    </div>
+    <div id="email" class="info_fields">
+        <p>Email:</p>
+        <h3 th:text="${user.getEmail()}">Email</h3>
+    </div>
+    <div id="role" class="info_fields">
+        <p>Роль:</p>
+        <h3 th:text="${#authentication.authorities}">Role</h3>
+    </div>
+</div>
+</body>
+</html>

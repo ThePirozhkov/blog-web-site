@@ -5,7 +5,8 @@
     <title>Fragment</title>
 </head>
 <body>
-<div id="buttons" th:fragment="logout (username)">
+<!--/*@thymesVar id="userEntity" type="by.baby.blogwebsite.persistence.entity.UserEntity"*/-->
+<div id="buttons" th:fragment="logout (userEntity)">
     <style>
         #logout_button {
             background-color: lightgray;
@@ -36,11 +37,11 @@
             display: flex;
         }
     </style>
-  <form th:action="@{/user}" method="get">
-      <button id="user_button" th:text="${username}">User</button>
-  </form>
+    <a th:href="@{/user/{id}(id = ${userEntity.id})}">
+        <button id="user_button" th:text="${#authentication.name}">User</button>
+    </a>
   <form th:action="@{/logout}" method="post">
-    <button id="logout_button" type="submit">Log out</button>
+    <button id="logout_button" type="submit">Выйти</button>
   </form>
 </div>
 </body>
