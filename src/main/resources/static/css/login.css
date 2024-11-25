@@ -84,17 +84,7 @@ p {
     margin: 0;
 }
 
-#unknown_pass_login {
-    color: white;
-    text-align: center;
-}
-
-#logout_success {
-    color: green;
-    margin: 0;
-}
-
-#restored_success {
+.success {
     color: green;
     margin: 0;
 }
