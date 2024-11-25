@@ -1,8 +1,6 @@
 package by.baby.blogwebsite.http.controller;
 
 import by.baby.blogwebsite.dto.UserDto;
-import by.baby.blogwebsite.persistence.entity.UserEntity;
-import by.baby.blogwebsite.repository.UserRepository;
 import by.baby.blogwebsite.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
