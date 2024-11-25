@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @CheckRestoreData
 @ConfirmPasswordRestoreAccess
-public class RestoreAccessDto {
+public final class RestoreAccessDto {
     @Email(message = "Должен иметь формат E-mail!")
     private String email;
     private String accessKey;

@@ -27,7 +27,11 @@
     </div>
     <div id="role" class="info_fields">
         <p>Роль:</p>
-        <h3 th:text="${#authentication.authorities}">Role</h3>
+        <h3 th:text="${user.getRole()}">Role</h3>
+    </div>
+    <div id="buttons" th:if="${#authentication.name.equals(user.getUsername())}">
+        <a class="a_button" th:href="@{update}"><button>Изменить</button></a>
+        <a class="a_button"><button>Изменить пароль</button></a>
     </div>
 </div>
 </body>

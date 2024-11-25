@@ -72,7 +72,6 @@ input {
 }
 
 #login_form {
-    border: 5px orange;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;

@@ -20,7 +20,8 @@ public class UserDtoMapper {
                         user.getUsername(),
                         user.getPassword(),
                         user.getEmail(),
-                        user.getRole()))
+                        user.getRole(),
+                        user.getRestoreKey()))
                 .orElseThrow(() -> new RuntimeException("User not mapped"));
     }
 

@@ -10,7 +10,7 @@
     <h1 id="title">Пэт проект www.blogwebsite.com
         <span id="login_success" th:if="${param.login!=null}">Авторизация прошла успешно!</span>
     </h1>
-    <div th:replace="~{fragments/fragment.html :: logout (userEntity = ${user})}"></div>
+    <div th:replace="~{fragments/fragment.html :: logout (userDto = ${user})}"></div>
 </div>
 </body>
 </html>
