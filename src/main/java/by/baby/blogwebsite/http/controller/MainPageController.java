@@ -2,7 +2,6 @@ package by.baby.blogwebsite.http.controller;
 
 import by.baby.blogwebsite.persistence.entity.UserEntity;
 import by.baby.blogwebsite.repository.UserRepository;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
