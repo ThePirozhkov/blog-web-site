@@ -1,7 +1,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User Page</title>
+  <title>Update Page</title>
   <link th:href="@{/css/user_update.css}" rel="stylesheet">
 </head>
 <body>
@@ -13,12 +13,12 @@
 <div id="update">
   <form id="update_form" th:action="@{/user/update}" method="post" th:object="${updateUserDto}">
     <input id="id" name="id" type="hidden" th:value="*{getId()}">
-    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+    <p id="username_error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
     <p>Имя пользователя:</p>
     <label>
       <input type="text" id="username" name="username" th:field="*{username}" th:value="*{getUsername()}">
     </label>
-    <p th:if="${hasUniqueEmailError}">Пользователь с таким e-mail существует!</p>
+    <p th:if="${hasUniqueEmailError}"><b>Пользователь с таким e-mail существует!</b></p>
     <p>Email:</p>
     <label>
       <input type="text" id="email" name="email" th:field="*{email}" th:value="*{getEmail()}">

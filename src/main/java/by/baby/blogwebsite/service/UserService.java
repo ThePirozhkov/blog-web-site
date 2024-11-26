@@ -1,12 +1,15 @@
 package by.baby.blogwebsite.service;
 
 import by.baby.blogwebsite.dto.RegistrationDto;
+import by.baby.blogwebsite.dto.UpdatePassDto;
 import by.baby.blogwebsite.dto.UpdateUserDto;
 import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.mapper.RegistrationDtoMapper;
 import by.baby.blogwebsite.mapper.UserDtoMapper;
 import by.baby.blogwebsite.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,8 @@ public class UserService {
     private final UserDtoMapper userDtoMapper;
     private final RegistrationDtoMapper registrationDtoMapper;
     private final PasswordEncoder passwordEncoder;
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public Optional<UserDto> findById(Long id) {
         return userRepository.findById(id)
@@ -52,6 +57,17 @@ public class UserService {
                 })
                 .map(userDtoMapper::mapToUserDto)
                 .orElseThrow(() -> new RuntimeException("Cannot update user"));
+    }
+
+    public UserDto updatePass(UpdatePassDto dto, Long id) {
+        logger.info("User: {}", userRepository.findById(id));
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+                    return user;
+                })
+                .map(userDtoMapper::mapToUserDto)
+                .orElseThrow(() -> new RuntimeException("Cannot update pass"));
     }
 
 }

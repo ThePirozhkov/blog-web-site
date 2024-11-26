@@ -6,48 +6,33 @@ body {
     margin: 0;
 }
 
-p {
-    color: white;
-    padding: 10px;
-    margin: 0;
-    max-width: 110px;
-    min-width: 110px;
-}
-
 a {
     color: lightgray;
     text-decoration: none;
 }
 
-#user_header {
-    background-color: chocolate;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.success {
-    color: green;
-}
-
-label {
+input {
+    display: block;
     width: 100%;
-    padding-right: 10px;
+    border: 3px;
+    background-color: lightgray;
+    max-width: 500px;
 }
 
-.info_fields {
+p {
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+#update_form {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
 }
 
-h3 {
-    color: white;
-}
-
-#info {
-    display: flex;
-    flex-direction: column;
+#update_pass {
     width: 500px;
     margin-top: 5cm;
     left: 0;
@@ -57,32 +42,29 @@ h3 {
     background-color: chocolate;
 }
 
-input {
-    display: block;
-    width: 100%;
-    border: 3px;
-    background-color: lightgray;
+#pass_update_header {
+    background-color: chocolate;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
-button {
+#update_button {
     background-color: lightgray;
     width: 100%;
     padding-bottom: 10px;
     padding-top: 10px;
+    margin-top: 10px;
     border: 0;
 }
 
-button:hover {
+#update_button:hover {
     background-color: dimgray;
     cursor: pointer;
 }
 
-.a_button {
-    width: 100%;
-}
-
-#buttons {
-    display: flex;
-    margin-top: 10px;
-    width: 100%;
+.error_p {
+    font-weight: bold;
+    padding-bottom: 0;
 }

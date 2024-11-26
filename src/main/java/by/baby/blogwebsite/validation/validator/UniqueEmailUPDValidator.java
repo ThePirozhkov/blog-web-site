@@ -21,6 +21,6 @@ public class UniqueEmailUPDValidator implements ConstraintValidator<UniqueEmailU
         return userRepository.findById(dto.getId())
                 .map(userEntity ->
                         userEntity.getEmail().equals(dto.getEmail()) || !userRepository.existsByEmail(dto.getEmail()))
-                .orElse(false);
+                .orElseThrow(() -> new RuntimeException("Validation failed"));
     }
 }

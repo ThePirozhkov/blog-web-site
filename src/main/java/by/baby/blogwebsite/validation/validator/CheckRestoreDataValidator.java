@@ -23,6 +23,6 @@ public class CheckRestoreDataValidator implements ConstraintValidator<CheckResto
         return userRepository.findByEmail(restoreAccessDto.getEmail())
                 .map(userEntity -> userEntity.getEmail().equals(restoreAccessDto.getEmail())
                         && userEntity.getRestoreKey().equals(restoreAccessDto.getAccessKey()))
-                .orElse(false);
+                .orElseThrow(() -> new RuntimeException("Validation failed"));
     }
 }

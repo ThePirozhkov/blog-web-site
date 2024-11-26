@@ -9,6 +9,7 @@
 <div id="user_header">
     <a th:href="@{/main}"><h1><</h1></a>
   <h1>Пользователь <span th:text="${user.getUsername()}">User</span></h1>
+    <h1 class="success" th:if="${param.upd!=null}">Изменено успешно!</h1>
 </div>
 <div id="info">
     <div id="restore_field" class="info_fields">
@@ -31,7 +32,7 @@
     </div>
     <div id="buttons" th:if="${#authentication.name.equals(user.getUsername())}">
         <a class="a_button" th:href="@{update}"><button>Изменить</button></a>
-        <a class="a_button"><button>Изменить пароль</button></a>
+        <a class="a_button" th:href="@{update-password}"><button>Изменить пароль</button></a>
     </div>
 </div>
 </body>

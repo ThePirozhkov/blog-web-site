@@ -63,3 +63,7 @@ p {
     background-color: dimgray;
     cursor: pointer;
 }
+
+#username_error {
+    font-weight: bold;
+}
