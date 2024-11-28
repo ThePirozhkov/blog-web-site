@@ -10,4 +10,6 @@ public class UserDto {
     String password;
     String email;
     Role role;
+    String restoreKey;
+    String avatar;
 }

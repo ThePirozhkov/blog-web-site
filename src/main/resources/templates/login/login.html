@@ -7,10 +7,9 @@
 </head>
 <body>
 <div id="authorization_header">
-    <h1>
-        Авторизация <span id="logout_success" th:if="${param.logout!=null}">Вы успешно вышли!</span>
-                    <span id="restored_success" th:if="${param.restored!=null}">Доступ восстановлен!</span>
-    </h1>
+    <h1>Авторизация</h1>
+                    <h1 class="success" th:if="${param.logout!=null}">Вы успешно вышли!</h1>
+                    <h1 class="success" th:if="${param.restored!=null}">Доступ восстановлен!</h1>
 </div>
 <div id="login">
     <p id="unknown_pass_login" th:if="${param.error!=null}">Неправильный пароль или имя пользователя</p>

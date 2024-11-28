@@ -2,10 +2,7 @@ package by.baby.blogwebsite.persistence.entity;
 
 import by.baby.blogwebsite.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "user_entity", schema = "public")
+@ToString
 public class UserEntity {
 
     @Id
@@ -38,11 +36,22 @@ public class UserEntity {
     @Column(name = "restorekey", nullable = false, unique = true)
     private String restoreKey;
 
+    @Column(name = "avatar", unique = true)
+    private String avatar;
+
     public UserEntity(Role role, String email, String password, String username) {
         this.role = role;
         this.email = email;
         this.password = password;
         this.username = username;
+    }
+
+    public UserEntity(Role role, String email, String password, String username, String avatar) {
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.avatar = avatar;
     }
 
     @PrePersist

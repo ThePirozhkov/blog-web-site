@@ -9,17 +9,21 @@
 <div id="user_header">
     <a th:href="@{/main}"><h1><</h1></a>
   <h1>Пользователь <span th:text="${user.getUsername()}">User</span></h1>
+    <h1 class="success" th:if="${param.upd!=null}">Изменено успешно!</h1>
+    <h1 class="success" th:if="${param.updimg!=null}">Аватар изменится через некоторое время!</h1>
 </div>
 <div id="info">
+    <div id="avatar_field">
+        <img style="object-fit: contain" id="avatar" th:src="@{/{path}(path = ${user.avatar}, v=${#dates.format(new java.util.Date(),'yyyyMMddHHmmss')})}" alt="Avatar">
+        <div id="username" class="info_fields">
+            <h1 th:text="${user.getUsername()}">Username</h1>
+        </div>
+    </div>
     <div id="restore_field" class="info_fields">
         <p th:if="${#authentication.name.equals(user.getUsername())}">Ключ восстановления:</p>
         <label th:if="${#authentication.name.equals(user.getUsername())}">
             <input type="text" readonly th:value="${user.getRestoreKey()}">
         </label>
-    </div>
-    <div id="username" class="info_fields">
-        <p>Имя пользователя:</p>
-        <h3 th:text="${user.getUsername()}">Username</h3>
     </div>
     <div id="email" class="info_fields">
         <p>Email:</p>
@@ -27,7 +31,12 @@
     </div>
     <div id="role" class="info_fields">
         <p>Роль:</p>
-        <h3 th:text="${#authentication.authorities}">Role</h3>
+        <h3 th:text="${user.getRole()}">Role</h3>
+    </div>
+    <div id="buttons" th:if="${#authentication.name.equals(user.getUsername())}">
+        <a class="a_button" th:href="@{update}"><button>Изменить</button></a>
+        <a class="a_button" th:href="@{update-password}"><button>Изменить пароль</button></a>
+        <a class="a_button" th:href="@{update-image}"><button>Изменить аватар</button></a>
     </div>
 </div>
 </body>

@@ -1,0 +1,30 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Page</title>
+  <link th:href="@{/css/user_update.css}" rel="stylesheet">
+</head>
+<body>
+<!--/*@thymesVar id="updateUserDto" type="by.baby.blogwebsite.dto.UpdateUserDto"*/-->
+<div id="user_update_header">
+  <a th:href="@{/user/{id} (id = ${updateUserDto.getId()})}"><h1><</h1></a>
+  <h1>Изменение имени и E-mail</h1>
+</div>
+<div id="update">
+  <form id="update_form" th:action="@{/user/update}" method="post" th:object="${updateUserDto}">
+    <input id="id" name="id" type="hidden" th:value="*{getId()}">
+    <p id="username_error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+    <p>Имя пользователя:</p>
+    <label>
+      <input type="text" id="username" name="username" th:field="*{username}" th:value="*{getUsername()}">
+    </label>
+    <p th:if="${hasUniqueEmailError}"><b>Пользователь с таким e-mail существует!</b></p>
+    <p>Email:</p>
+    <label>
+      <input type="text" id="email" name="email" th:field="*{email}" th:value="*{getEmail()}">
+    </label>
+    <button id="update_button">Обновить</button>
+  </form>
+</div>
+</body>
+</html>
