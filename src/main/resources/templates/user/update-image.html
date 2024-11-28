@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Update Image</title>
+</head>
+<body>
+<form th:action="@{/user/update-image}" method="post" enctype="multipart/form-data">
+    <input id="avatar" name="avatar" type="file" accept="image/jpeg,image/png">
+    <button>Загрузить</button>
+</form>
+</body>
+</html>

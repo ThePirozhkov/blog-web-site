@@ -5,3 +5,7 @@ databaseChangeLog:
       file: db/changelog/v1.0.0/insert-test-entity.sql
   - include:
       file: db/changelog/v1.0.1/add-column-restore-key.sql
+  - include:
+      file: db/changelog/v1.0.2/add-colum-avatar.sql
+  - include:
+      file: db/changelog/v1.0.3/alter-column-add-default.sql

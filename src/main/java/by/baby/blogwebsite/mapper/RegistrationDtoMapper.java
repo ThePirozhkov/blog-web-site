@@ -13,7 +13,8 @@ public class RegistrationDtoMapper {
                 Role.USER,
                 registrationDto.getEmail(),
                 registrationDto.getPassword(),
-                registrationDto.getUsername());
+                registrationDto.getUsername(),
+                "images/avatar.png");
     }
 
 }

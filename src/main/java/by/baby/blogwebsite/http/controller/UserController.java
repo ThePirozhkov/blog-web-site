@@ -3,9 +3,13 @@ package by.baby.blogwebsite.http.controller;
 import by.baby.blogwebsite.dto.UpdatePassDto;
 import by.baby.blogwebsite.dto.UpdateUserDto;
 import by.baby.blogwebsite.dto.UserDto;
+import by.baby.blogwebsite.service.ImageService;
 import by.baby.blogwebsite.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -37,6 +42,7 @@ public class UserController {
 
     private final UserService userService;
     private final HttpSession httpSession;
+    private final ImageService imageService;
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/{id}")
@@ -77,7 +83,7 @@ public class UserController {
         userService.updateUser(updateUserDto, updateUserDto.getId());
 
         String password = userService.findById(updateUserDto.getId())
-                .map(Objects::toString)
+                .map(UserDto::getPassword)
                 .orElseThrow(() -> new UsernameNotFoundException("User with id " + updateUserDto.getId() + " not found"));
 
         Collection<? extends GrantedAuthority> nowAuthorities = authentication.getAuthorities();
@@ -119,6 +125,26 @@ public class UserController {
         }
         userService.updatePass(updatePassDto, updatePassDto.getId());
         return "redirect:/user/" + updatePassDto.getId() + "?upd";
+    }
+
+    @GetMapping("/update-image")
+    public String updateImage() {
+        return "user/update-image";
+    }
+
+    @SneakyThrows
+    @PostMapping("/update-image")
+    public String updateImage(@RequestParam("avatar") MultipartFile avatar, HttpServletResponse response) {
+        logger.info("file: {}", avatar);
+        UserDto updateUser = (UserDto) httpSession.getAttribute("user");
+        imageService.saveAvatar(
+                avatar.getBytes(),
+                "avatar-" + updateUser.getId() + "." + FilenameUtils.getExtension(avatar.getOriginalFilename()),
+                updateUser.getId());
+        response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.addHeader("Pragma", "no-cache");
+        response.addHeader("Expires", "0");
+        return "redirect:/user/" + updateUser.getId() + "?updimg";
     }
 
 }

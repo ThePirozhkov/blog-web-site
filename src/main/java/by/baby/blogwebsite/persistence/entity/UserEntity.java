@@ -36,11 +36,22 @@ public class UserEntity {
     @Column(name = "restorekey", nullable = false, unique = true)
     private String restoreKey;
 
+    @Column(name = "avatar", unique = true)
+    private String avatar;
+
     public UserEntity(Role role, String email, String password, String username) {
         this.role = role;
         this.email = email;
         this.password = password;
         this.username = username;
+    }
+
+    public UserEntity(Role role, String email, String password, String username, String avatar) {
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.avatar = avatar;
     }
 
     @PrePersist

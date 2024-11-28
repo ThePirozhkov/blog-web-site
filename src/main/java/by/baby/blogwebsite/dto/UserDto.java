@@ -11,4 +11,5 @@ public class UserDto {
     String email;
     Role role;
     String restoreKey;
+    String avatar;
 }
