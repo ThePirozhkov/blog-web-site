@@ -14,7 +14,7 @@
 </div>
 <div id="info">
     <div id="avatar_field">
-        <img style="object-fit: contain" id="avatar" th:src="@{/{path}(path = ${user.avatar}, v=${#dates.format(new java.util.Date(),'yyyyMMddHHmmss')})}" alt="Avatar">
+        <img style="width: 100%; height: 100%" id="avatar" th:src="@{/user/load-image/{avatar}(avatar=${user.avatar})}" alt="Avatar">
         <div id="username" class="info_fields">
             <h1 th:text="${user.getUsername()}">Username</h1>
         </div>

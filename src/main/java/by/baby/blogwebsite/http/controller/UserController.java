@@ -12,7 +12,10 @@ import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,9 +33,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/user")
@@ -145,6 +150,20 @@ public class UserController {
         response.addHeader("Pragma", "no-cache");
         response.addHeader("Expires", "0");
         return "redirect:/user/" + updateUser.getId() + "?updimg";
+    }
+
+    @GetMapping("/load-image/{filename:.+}")
+    public ResponseEntity<Resource> loadImage(@PathVariable String filename) {
+        try {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Paths.get(filename)))
+                    .header(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
+                    .header(HttpHeaders.PRAGMA, "no-cache")
+                    .header(HttpHeaders.EXPIRES, "0")
+                    .body(imageService.loadAvatar(filename));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
