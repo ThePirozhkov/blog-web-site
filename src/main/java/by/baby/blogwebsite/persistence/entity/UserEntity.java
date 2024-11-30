@@ -4,6 +4,7 @@ import by.baby.blogwebsite.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,8 +37,11 @@ public class UserEntity {
     @Column(name = "restorekey", nullable = false, unique = true)
     private String restoreKey;
 
-    @Column(name = "avatar", unique = true)
+    @Column(name = "avatar")
     private String avatar;
+
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BlogEntity> blogs;
 
     public UserEntity(Role role, String email, String password, String username) {
         this.role = role;

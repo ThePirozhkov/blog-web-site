@@ -14,7 +14,7 @@ public class RegistrationDtoMapper {
                 registrationDto.getEmail(),
                 registrationDto.getPassword(),
                 registrationDto.getUsername(),
-                "images/avatar.png");
+                null);
     }
 
 }

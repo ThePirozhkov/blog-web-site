@@ -8,9 +8,18 @@
 <body>
 <div id="buttons" th:fragment="logout (userDto)">
     <style>
+        img {
+            max-width: 36px;
+        }
+        a {
+            text-decoration: none;
+            display: flex;
+            max-height: 36px;
+        }
         #logout_button {
             background-color: lightgray;
             width: 100%;
+            height: 100%;
             padding-bottom: 10px;
             padding-top: 10px;
             border-bottom: 0;
@@ -18,10 +27,12 @@
             border-right: 0;
             border-left: 1px solid chocolate;
         }
+
         #logout_button:hover {
             background-color: dimgray;
             cursor: pointer;
         }
+
         #user_button {
             background-color: lightgray;
             width: 100%;
@@ -29,15 +40,21 @@
             padding-top: 10px;
             border: 0;
         }
-        #user_button:hover {
-            background-color: dimgray;
-            cursor: pointer;
+        a:hover {
+            #user_button {
+                background-color: dimgray;
+                cursor: pointer;
+            }
+            img {
+                filter: brightness(50%);
+            }
         }
         #buttons {
             display: flex;
         }
     </style>
     <a th:href="@{/user/{id}(id = ${userDto.id})}">
+        <img onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${userDto.avatar})}">
         <button id="user_button" th:text="${#authentication.name}">User</button>
     </a>
   <form th:action="@{/logout}" method="post">

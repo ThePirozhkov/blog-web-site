@@ -11,5 +11,28 @@
         <h1 id="login_success" th:if="${param.login!=null}">Авторизация прошла успешно!</h1>
     <div th:replace="~{fragments/fragment.html :: logout (userDto = ${user})}"></div>
 </div>
+<div id="container">
+    <div id="rezerv">
+        <p></p>
+    </div>
+    <div id="blogs">
+        <div style="margin-right: 30px" th:each="blog : ${blogs.getContent()}">
+            <a class="a_blog">
+                <div class="blog">
+                    <h3 class="title_blog" th:text="${blog.title}">Title</h3>
+                    <div class="blog_info">
+                        <a class="author_blog" th:href="@{/user/{id}(id = ${blog.author.id})}" th:text="${blog.author.username}">User</a>
+                        <p class="content_preview" th:text="${blog.content}"></p>
+                        <p class="created_at" th:text="${#dates.format(blog.createdAt, 'dd.MM.yyyy HH:mm:ss')}">CreatedAt</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div id="page_buttons">
+            <a th:href="@{/main(page = ${blogs.number - 1})}" th:classappend="${blogs.isFirst()} ? 'disabled'">Предыдущая страница</a>
+            <a th:href="@{/main(page = ${blogs.number + 1})}" th:classappend="${blogs.isLast()} ? 'disabled'">Следующая страница</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
