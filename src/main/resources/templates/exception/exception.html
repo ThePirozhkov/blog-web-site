@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Max Upload Error</title>
+    <link th:href="@{/css/error.css}" rel="stylesheet">
+</head>
+<body>
+<div id="error_header">
+    <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+    <h1 id="error" th:text="${error}">Error</h1>
+    <a th:href="@{/user/{userId}(userId=${user.id})}"><button>Вернуться домой</button></a>
+</div>
+</body>
+</html>

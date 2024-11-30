@@ -29,10 +29,8 @@ public class WebSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/images/**").permitAll()
-                                .requestMatchers("/images/avatars/**").permitAll()
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/login", "/logout", "/reg", "/restore").permitAll()
+                                .requestMatchers("/login", "/logout", "/reg", "/restore", "/image/**", "/exception").permitAll()
                                 .requestMatchers("/user/**").hasAnyAuthority(Role.USER.getAuthority(), Role.ADMIN.getAuthority())
                                 .requestMatchers("/main").hasAnyAuthority(Role.USER.getAuthority(), Role.ADMIN.getAuthority()))
                 .formLogin(form -> form.loginPage("/login")

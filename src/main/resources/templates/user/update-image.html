@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Image Update Image</title>
+    <link th:href="@{/css/user_update_image.css}" rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/user/update-image}" method="post" enctype="multipart/form-data">
-    <input id="avatar" name="avatar" type="file" accept="image/jpeg,image/png">
-    <button>Загрузить</button>
-</form>
+<div id="image_update_header">
+    <a th:href="@{/user/{id} (id = ${user.getId()})}"><h1><</h1></a>
+    <h1>Изменение аватара</h1>
+</div>
+<div id="update_image">
+    <form th:action="@{/user/update-image}" method="post" enctype="multipart/form-data">
+        <input id="avatar" name="avatar" type="file" accept="image/jpeg,image/png">
+        <button>Загрузить</button>
+    </form>
+</div>
 </body>
 </html>
