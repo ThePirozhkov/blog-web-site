@@ -7,8 +7,10 @@
 </head>
 <body>
 <div id="user_header">
-    <a th:href="@{/main}"><h1><</h1></a>
-  <h1>Пользователь <span th:text="${user.getUsername()}">User</span></h1>
+    <a id="a_logo" th:href="@{/main}">
+        <img id="logo" width="36" height="36" alt="logo" th:src="@{/images/logo.png}">
+    </a>
+  <h1 id="username_field">Пользователь <span th:text="${user.getUsername()}">User</span></h1>
     <h1 class="success" th:if="${param.upd!=null}">Изменено успешно!</h1>
     <h1 class="success" th:if="${param.updimg!=null}">Аватар изменится через некоторое время!</h1>
 </div>

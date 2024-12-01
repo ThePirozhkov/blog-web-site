@@ -3,7 +3,6 @@ package by.baby.blogwebsite.service;
 import by.baby.blogwebsite.dto.BlogDto;
 import by.baby.blogwebsite.mapper.BlogDtoMapper;
 import by.baby.blogwebsite.repository.BlogRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

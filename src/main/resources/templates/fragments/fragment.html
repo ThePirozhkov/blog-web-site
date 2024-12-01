@@ -28,6 +28,23 @@
             border-left: 1px solid chocolate;
         }
 
+        #registration {
+            background-color: lightgray;
+            width: 100%;
+            height: 100%;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border-bottom: 0;
+            border-top: 0;
+            border-right: 0;
+            border-left: 1px solid chocolate;
+        }
+
+        #registration:hover {
+            background-color: dimgray;
+            cursor: pointer;
+        }
+
         #logout_button:hover {
             background-color: dimgray;
             cursor: pointer;
@@ -45,21 +62,63 @@
                 background-color: dimgray;
                 cursor: pointer;
             }
-            img {
+            #img_avatar {
                 filter: brightness(50%);
             }
         }
         #buttons {
             display: flex;
         }
+        #auth {
+            display: flex;
+        }
     </style>
-    <a th:href="@{/user/{id}(id = ${userDto.id})}">
-        <img onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${userDto.avatar})}">
-        <button id="user_button" th:text="${#authentication.name}">User</button>
+    <div th:if="${userDto==null}" id="no-auth">
+        <a th:href="@{/login}"><button id="registration">Зарегистрироваться или войти</button></a>
+    </div>
+    <div th:if="${userDto!=null}" id="auth">
+        <a th:href="@{/user/{id}(id = ${userDto.id})}">
+            <img id="img_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${userDto.avatar})}">
+            <button id="user_button" th:text="${#authentication.name}">User</button>
+        </a>
+        <form th:action="@{/logout}" method="post">
+            <button id="logout_button" type="submit">Выйти</button>
+        </form>
+    </div>
+</div>
+<div id="head" th:fragment="main_head (user)">
+    <style>
+        * {
+            margin: 0;
+        }
+        #head {
+            background-color: chocolate;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        #logoandtitle {
+            display: flex;
+            align-items: center;
+        }
+        #logo {
+            padding-right: 10px;
+        }
+        #title {
+            color: white;
+        }
+        #a_title {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+    </style>
+    <a id="a_title" th:href="@{/main}">
+        <div id="logoandtitle">
+            <img id="logo" width="36" height="36" alt="logo" th:src="@{/images/logo.png}">
+            <h1 id="title">Пэт проект www.blogwebsite.com</h1>
+        </div>
     </a>
-  <form th:action="@{/logout}" method="post">
-    <button id="logout_button" type="submit">Выйти</button>
-  </form>
+    <div th:replace="~{fragments/fragment.html :: logout (userDto = ${user})}"></div>
 </div>
 </body>
 </html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Page</title>
+    <link th:href="@{/css/blog.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/fragment.html :: main_head (user = ${user})}"></div>
+</body>
+</html>

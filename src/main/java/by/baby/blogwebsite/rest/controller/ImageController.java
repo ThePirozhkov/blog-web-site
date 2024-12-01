@@ -1,6 +1,7 @@
 package by.baby.blogwebsite.rest.controller;
 
 import by.baby.blogwebsite.service.ImageService;
+import by.baby.blogwebsite.util.HeaderUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,9 +27,9 @@ public class ImageController {
         try {
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Paths.get(filename)))
-                    .header(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
-                    .header(HttpHeaders.PRAGMA, "no-cache")
-                    .header(HttpHeaders.EXPIRES, "0")
+                    .header(HttpHeaders.CACHE_CONTROL, HeaderUtil.getMaxAgeHeader(2))
+                    .header(HttpHeaders.PRAGMA, "public")
+                    .header(HttpHeaders.EXPIRES, HeaderUtil.getExpiresHeader(2))
                     .body(imageService.loadAvatar(filename));
         } catch (IOException e) {
             throw new RuntimeException(e);

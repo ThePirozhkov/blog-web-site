@@ -10,19 +10,6 @@ body {
     margin: 0;
 }
 
-#head {
-    background-color: chocolate;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-#title {
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
-    color: white;
-}
-
 #blogs {
     width: 70%;
 }
@@ -56,7 +43,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     vertical-align: bottom;
-    line-height: 1;
+    line-height: 14px;
 }
 
 .blog {
@@ -64,7 +51,6 @@ body {
     background-color: lightgray;
     border: black 1px solid;
     margin-bottom: 1px;
-    cursor: pointer;
     padding: 10px;
 }
 
@@ -96,7 +82,7 @@ body {
 }
 
 .a_blog {
-    max-width: 500px;
+    max-width: 100%
 }
 
 .blog_info {
@@ -107,11 +93,6 @@ body {
 .created_at {
     margin-left: auto;
     color: dimgray;
-}
-
-#login_success {
-    color: green;
-    margin: 0;
 }
 
 .disabled {

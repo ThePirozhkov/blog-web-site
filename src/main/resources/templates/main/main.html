@@ -6,18 +6,14 @@
     <link th:href="@{/css/main.css}" th:rel="stylesheet">
 </head>
 <body>
-<div id="head">
-    <h1 id="title">Пэт проект www.blogwebsite.com</h1>
-        <h1 id="login_success" th:if="${param.login!=null}">Авторизация прошла успешно!</h1>
-    <div th:replace="~{fragments/fragment.html :: logout (userDto = ${user})}"></div>
-</div>
+<div th:replace="~{fragments/fragment.html :: main_head (user = ${user})}"></div>
 <div id="container">
     <div id="rezerv">
         <p></p>
     </div>
     <div id="blogs">
         <div style="margin-right: 30px" th:each="blog : ${blogs.getContent()}">
-            <a class="a_blog">
+            <a class="a_blog" th:href="@{/blog/{id}(id = ${blog.id})}">
                 <div class="blog">
                     <h3 class="title_blog" th:text="${blog.title}">Title</h3>
                     <div class="blog_info">

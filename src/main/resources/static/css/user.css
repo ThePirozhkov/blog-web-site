@@ -25,6 +25,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    max-height: 68px;
 }
 
 #avatar {
@@ -45,7 +46,7 @@ a {
 }
 
 .success {
-    color: green;
+    color: #88e7e7;
 }
 
 label {
