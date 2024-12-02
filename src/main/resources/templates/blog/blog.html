@@ -7,5 +7,10 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragment.html :: main_head (user = ${user})}"></div>
+<div id="blog">
+    <div id="author_info">
+        <img width="64px" height="64px" id="creator_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${blog.author.avatar})}">
+    </div>
+</div>
 </body>
 </html>

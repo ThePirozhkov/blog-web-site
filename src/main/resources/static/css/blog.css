@@ -1,3 +1,14 @@
 * {
     margin: 0;
 }
+
+#blog {
+    margin: 10px;
+    border: black 1px solid;
+    min-height: 100vh;
+    background-color: lightgray;
+}
+
+#author_info {
+    padding: 10px;
+}
