@@ -2,13 +2,62 @@
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 #blog {
-    margin: 10px;
+    display: flex;
+}
+
+#title_blog {
+    padding: 10px;
+    white-space: normal;
+    word-break: break-all;
+    color: chocolate;
+}
+
+#blog_content {
+    font-size: 20px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+#content {
+    margin: 10px 10px 10px 10px;
     border: black 1px solid;
-    min-height: 100vh;
+    width: 100%;
+    display: inline-block;
+    height: min-content;
     background-color: lightgray;
 }
 
-#author_info {
+#stats {
+
+}
+
+#post_amount {
     padding: 10px;
+    color: dimgray;
+}
+
+#avatar_username {
+    background-color: chocolate;
+    display: flex;
+    align-items: center;
+}
+
+#author_info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    border: black 1px solid;
+    background-color: lightgray;
+    height: min-content;
+}
+
+#author_username {
+    padding-left: 10px;
+    padding-right: 10px;
 }

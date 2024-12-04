@@ -6,10 +6,15 @@
     <link th:href="@{/css/main.css}" th:rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{fragments/fragment.html :: main_head (user = ${user})}"></div>
+<div th:replace="~{fragments/fragment.html :: main_head (user = ${currentUser})}"></div>
 <div id="container">
-    <div id="rezerv">
-        <p></p>
+    <div id="mb_interesting">
+        <div id="create">
+            <a id="a_create" th:href="@{blog/create}">
+                <h1 id="plus">+</h1>
+                <h2 id="create_post">Создать пост...</h2>
+            </a>
+        </div>
     </div>
     <div id="blogs">
         <div style="margin-right: 30px" th:each="blog : ${blogs.getContent()}">

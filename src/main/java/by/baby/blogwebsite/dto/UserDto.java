@@ -3,6 +3,8 @@ package by.baby.blogwebsite.dto;
 import by.baby.blogwebsite.enums.Role;
 import lombok.Value;
 
+import java.util.List;
+
 @Value
 public class UserDto {
     Long id;
@@ -12,4 +14,5 @@ public class UserDto {
     Role role;
     String restoreKey;
     String avatar;
+    Integer blogsAmount;
 }

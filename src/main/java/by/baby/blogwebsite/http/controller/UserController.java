@@ -36,7 +36,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@SessionAttributes({"user"})
+@SessionAttributes({"user", "currentUser"})
 public class UserController {
 
     private final UserService userService;
@@ -50,6 +50,7 @@ public class UserController {
         UserDto user = userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         logger.info("User with id {} found", id);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         model.addAttribute("user", user);
         return "user/user";
     }

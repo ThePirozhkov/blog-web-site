@@ -1,8 +1,11 @@
 package by.baby.blogwebsite.service;
 
 import by.baby.blogwebsite.dto.BlogDto;
+import by.baby.blogwebsite.dto.CreateBlogDto;
 import by.baby.blogwebsite.mapper.BlogDtoMapper;
+import by.baby.blogwebsite.persistence.entity.BlogEntity;
 import by.baby.blogwebsite.repository.BlogRepository;
+import by.baby.blogwebsite.repository.UserRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,12 @@ public class BlogService {
 
     private final BlogRepository blogRepository;
     private final BlogDtoMapper blogDtoMapper;
+    private final UserRepository userRepository;
 
-    public BlogService(BlogRepository blogRepository, BlogDtoMapper blogDtoMapper) {
+    public BlogService(BlogRepository blogRepository, BlogDtoMapper blogDtoMapper, UserRepository userRepository) {
         this.blogRepository = blogRepository;
         this.blogDtoMapper = blogDtoMapper;
+        this.userRepository = userRepository;
     }
 
     public PageImpl<BlogDto> getBlogs(Pageable pageable) {
@@ -37,6 +42,18 @@ public class BlogService {
         return blogDtoMapper.mapToBlogDto(blogRepository.
                 findById(id)
                 .orElseThrow(() -> new RuntimeException("Unable to find blog by id: " + id)));
+    }
+
+    public BlogDto createBlog(CreateBlogDto blogDto) {
+        return Optional.of(blogDto)
+                .map(dto -> new BlogEntity(
+                        userRepository.findById(dto.getCreatorId()).orElseThrow(),
+                        blogDto.getContent(),
+                        blogDto.getTitle()
+                ))
+                .map(blogRepository::save)
+                .map(blogDtoMapper::mapToBlogDto)
+                .orElseThrow();
     }
 
 }

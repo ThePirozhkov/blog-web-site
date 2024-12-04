@@ -28,13 +28,15 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/login", "/logout", "/reg", "/restore", "/image/**", "/exception", "/main", "/user/**", "/blog/**").permitAll())
+                                .requestMatchers("/login/**", "/logout", "/reg", "/restore", "/image/**", "/exception", "/main", "/user/**", "/blog/**").permitAll())
                 .formLogin(form -> form.loginPage("/login")
-                        .defaultSuccessUrl("/main?login", true)
+                        .defaultSuccessUrl("/login/verification", true)
                         .permitAll())
                 .logout(logout -> logout.logoutUrl("/logout")
                         .deleteCookies("JSESSIONID")
-                        .permitAll());
+                        .permitAll())
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/login"));
         return http.build();
     }
 }

@@ -38,4 +38,10 @@ public class BlogEntity {
     private void setCreatedAt() {
         this.createdAt = new Date();
     }
+
+    public BlogEntity(UserEntity creator, String content, String title) {
+        this.creator = creator;
+        this.content = content;
+        this.title = title;
+    }
 }

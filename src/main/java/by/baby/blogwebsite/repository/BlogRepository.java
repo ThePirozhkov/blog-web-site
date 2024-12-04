@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlogRepository extends JpaRepository<BlogEntity, Long> {
     Page<BlogEntity> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    Long countByCreatorId(Long creatorId);
 }

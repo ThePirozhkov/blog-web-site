@@ -6,10 +6,22 @@
     <link th:href="@{/css/blog.css}" rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{fragments/fragment.html :: main_head (user = ${user})}"></div>
+<div th:replace="~{fragments/fragment.html :: main_head (user = ${currentUser})}"></div>
 <div id="blog">
     <div id="author_info">
-        <img width="64px" height="64px" id="creator_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${blog.author.avatar})}">
+        <div id="avatar_username">
+            <img width="64px" height="64px" id="creator_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${blog.author.avatar})}">
+            <a th:href="@{/user/{id}(id = ${blog.author.id})}">
+                <h1 id="author_username" th:text="${blog.author.username}">Username</h1>
+            </a>
+        </div>
+        <div id="stats">
+            <p id="post_amount">Количество постов: <span th:text="${blog.author.blogsAmount}">Amount</span></p>
+        </div>
+    </div>
+    <div id="content">
+        <h1 id="title_blog" th:text="${blog.title}">Title</h1>
+        <p id="blog_content" th:text="${blog.content}">Content</p>
     </div>
 </div>
 </body>

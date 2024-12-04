@@ -10,4 +10,9 @@ class BlogWebSiteApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void userDtoMapper() {
+
+    }
+
 }
