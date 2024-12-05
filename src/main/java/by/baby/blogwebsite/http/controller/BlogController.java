@@ -8,7 +8,6 @@ import by.baby.blogwebsite.repository.LikeRepository;
 import by.baby.blogwebsite.repository.UserRepository;
 import by.baby.blogwebsite.service.BlogService;
 import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,13 +24,11 @@ public class BlogController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(BlogController.class);
     private final LikeRepository likeRepository;
-    private final UserRepository userRepository;
 
-    public BlogController(HttpSession httpSession, BlogService blogService, BlogRepository blogRepository, LikeRepository likeRepository, UserRepository userRepository) {
+    public BlogController(HttpSession httpSession, BlogService blogService, LikeRepository likeRepository, UserRepository userRepository) {
         this.httpSession = httpSession;
         this.blogService = blogService;
         this.likeRepository = likeRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/{id}")

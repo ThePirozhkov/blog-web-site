@@ -1,7 +1,6 @@
 package by.baby.blogwebsite.http.controller;
 
 import by.baby.blogwebsite.service.BlogService;
-import by.baby.blogwebsite.service.UserService;
 import by.baby.blogwebsite.util.HeaderUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
