@@ -51,6 +51,10 @@ public class BlogService {
                         blogDto.getContent(),
                         blogDto.getTitle()
                 ))
+                .map(blogEntity -> {
+                    blogEntity.getCreator().getBlogs().add(blogEntity);
+                    return blogEntity;
+                })
                 .map(blogRepository::save)
                 .map(blogDtoMapper::mapToBlogDto)
                 .orElseThrow();

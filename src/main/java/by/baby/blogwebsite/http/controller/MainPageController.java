@@ -1,6 +1,5 @@
 package by.baby.blogwebsite.http.controller;
 
-import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.service.BlogService;
 import by.baby.blogwebsite.service.UserService;
 import by.baby.blogwebsite.util.HeaderUtil;
@@ -8,9 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +22,6 @@ public class MainPageController {
 
     private final BlogService blogService;
     private final HttpSession httpSession;
-    private final UserService userService;
 
     @GetMapping
     public String mainPage(@RequestParam(defaultValue = "0") int page,

@@ -5,6 +5,7 @@ import lombok.Value;
 
 import java.util.List;
 
+
 @Value
 public class UserDto {
     Long id;
@@ -15,4 +16,6 @@ public class UserDto {
     String restoreKey;
     String avatar;
     Integer blogsAmount;
+    List<LikeDto> likes;
+    Long amountLikes;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -33,6 +34,9 @@ public class BlogEntity {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private UserEntity creator;
+
+    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LikeEntity> likes;
 
     @PrePersist
     private void setCreatedAt() {

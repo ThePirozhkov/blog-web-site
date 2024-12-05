@@ -3,6 +3,7 @@ package by.baby.blogwebsite.dto;
 import lombok.Value;
 
 import java.util.Date;
+import java.util.List;
 
 @Value
 public class BlogDto {
@@ -11,4 +12,5 @@ public class BlogDto {
     String content;
     Date createdAt;
     UserDto author;
+    List<LikeDto> likes;
 }

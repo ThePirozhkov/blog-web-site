@@ -1,5 +1,6 @@
 package by.baby.blogwebsite.configuration;
 
+import by.baby.blogwebsite.enums.Role;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,8 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/login/**", "/logout", "/reg", "/restore", "/image/**", "/exception", "/main", "/user/**", "/blog/**").permitAll())
+                                .requestMatchers("/login/**", "/logout", "/reg", "/restore", "/image/**", "/exception", "/main", "/user/**", "/blog/**").permitAll()
+                                .requestMatchers("/like", "/like/unlike").permitAll())
                 .formLogin(form -> form.loginPage("/login")
                         .defaultSuccessUrl("/login/verification", true)
                         .permitAll())

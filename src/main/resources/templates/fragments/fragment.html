@@ -78,7 +78,7 @@
     </div>
     <div th:if="${userDto!=null}" id="auth">
         <a th:href="@{/user/{id}(id = ${userDto.id})}">
-            <img id="img_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${userDto.avatar})}">
+            <img id="img_avatar" onerror="this.src='/images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${userDto.avatar})}">
             <button id="user_button" th:text="${#authentication.name}">User</button>
         </a>
         <form th:action="@{/logout}" method="post">

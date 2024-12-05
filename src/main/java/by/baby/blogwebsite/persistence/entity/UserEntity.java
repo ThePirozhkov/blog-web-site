@@ -4,6 +4,7 @@ import by.baby.blogwebsite.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +42,10 @@ public class UserEntity {
     private String avatar;
 
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BlogEntity> blogs;
+    private List<BlogEntity> blogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LikeEntity> likes = new ArrayList<>();
 
     public UserEntity(Role role, String email, String password, String username) {
         this.role = role;

@@ -12,10 +12,12 @@ public class BlogDtoMapper {
 
     private final UserDtoMapper userDtoMapper;
     private final BlogRepository blogRepository;
+    private final LikeDtoMapper likeDtoMapper;
 
-    public BlogDtoMapper(UserDtoMapper userDtoMapper, BlogRepository blogRepository) {
+    public BlogDtoMapper(UserDtoMapper userDtoMapper, BlogRepository blogRepository, LikeDtoMapper likeDtoMapper) {
         this.userDtoMapper = userDtoMapper;
         this.blogRepository = blogRepository;
+        this.likeDtoMapper = likeDtoMapper;
     }
 
     public BlogDto mapToBlogDto(BlogEntity blogEntity) {
@@ -24,7 +26,8 @@ public class BlogDtoMapper {
                 blogEntity.getTitle(),
                 blogEntity.getContent(),
                 blogEntity.getCreatedAt(),
-                userDtoMapper.mapToUserDto(blogEntity.getCreator())
+                userDtoMapper.mapToUserDto(blogEntity.getCreator()),
+                blogEntity.getLikes().stream().map(likeDtoMapper::mapToDto).toList()
         ))
                 .orElseThrow(() -> new RuntimeException("Blog not mapped"));
     }

@@ -10,18 +10,30 @@
 <div id="blog">
     <div id="author_info">
         <div id="avatar_username">
-            <img width="64px" height="64px" id="creator_avatar" onerror="this.src='images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${blog.author.avatar})}">
+            <img width="64px" height="64px" id="creator_avatar" onerror="this.src='/images/avatar.png'" alt="avatar" th:src="@{/image/load-image/{img}(img = ${blog.author.avatar})}">
             <a th:href="@{/user/{id}(id = ${blog.author.id})}">
                 <h1 id="author_username" th:text="${blog.author.username}">Username</h1>
             </a>
         </div>
         <div id="stats">
             <p id="post_amount">Количество постов: <span th:text="${blog.author.blogsAmount}">Amount</span></p>
+            <p id="likes_amount">Количество лайков: <span th:text="${blog.author.amountLikes}">Likes</span></p>
         </div>
     </div>
     <div id="content">
         <h1 id="title_blog" th:text="${blog.title}">Title</h1>
         <p id="blog_content" th:text="${blog.content}">Content</p>
+        <p id="likes">Понравилось: <span th:text="${blog.likes.size()}">Likes</span></p>
+        <form th:if="${!liked && !#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}" th:action="@{/like}" method="post">
+            <input type="hidden" name="blogId" th:value="${blog.getId()}">
+            <input type="hidden" name="userId" th:value="${currentUser.id}">
+            <button class="like_unlike" id="like" type="submit">Лайк</button>
+        </form>
+        <form th:if="${liked && !#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}" th:action="@{/like/unlike}" method="post">
+            <input type="hidden" name="blogId" th:value="${blog.getId()}">
+            <input type="hidden" name="userId" th:value="${currentUser.id}">
+            <button class="like_unlike" id="unlike" type="submit">Убрать лайк</button>
+        </form>
     </div>
 </div>
 </body>
