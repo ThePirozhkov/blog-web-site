@@ -1,4 +1,4 @@
-package by.baby.blogwebsite.handler;
+package by.baby.blogwebsite.security.handler;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ControllerAdvice;

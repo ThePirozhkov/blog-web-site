@@ -5,6 +5,8 @@ import by.baby.blogwebsite.util.HeaderUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ public class MainPageController {
     private final BlogService blogService;
     private final HttpSession httpSession;
 
+
     @GetMapping
     public String mainPage(@RequestParam(defaultValue = "0") int page,
                            HttpServletResponse response,
                            Model model) {
+
         response.addHeader("Expires", HeaderUtil.getExpiresHeader(2));
         response.addHeader("Pragma", "public");
         response.addHeader("Cache-Control", HeaderUtil.getMaxAgeHeader(2));

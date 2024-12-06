@@ -16,16 +16,16 @@ public class UserDtoMapper {
     private final UserRepository userRepository;
     private final LikeDtoMapper likeDtoMapper;
 
-    public UserDto mapToUserDto(UserEntity user) {
+    @Getter
+    private static class AmountLikes {
+        private Long count = 0L;
 
-        @Getter
-        class AmountLikes {
-            private Long count = 0L;
-
-            public void add(int amount) {
-                this.count += amount;
-            }
+        public void add(int amount) {
+            this.count += amount;
         }
+    }
+
+    public UserDto mapToUserDto(UserEntity user) {
 
         AmountLikes amountLikes = new AmountLikes();
 

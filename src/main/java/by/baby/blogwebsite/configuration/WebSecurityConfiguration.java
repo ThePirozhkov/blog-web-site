@@ -8,14 +8,25 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfiguration {
+
+    private final DataSource dataSource;
+
+    public WebSecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,7 +49,24 @@ public class WebSecurityConfiguration {
                         .deleteCookies("JSESSIONID")
                         .permitAll())
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
-                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/login"));
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/login"))
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionFixation().migrateSession()
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .maximumSessions(1)
+                        .expiredUrl("/login"))
+                .rememberMe(rememberMe ->
+                        rememberMe
+                                .rememberMeParameter("remember-me")
+                                .tokenRepository(persistentTokenRepository())
+                                .tokenValiditySeconds(30 * 24 * 60 * 60));
         return http.build();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 }

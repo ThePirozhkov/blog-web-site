@@ -6,6 +6,15 @@ body {
     margin: 0;
 }
 
+#remember-me {
+    display: flex;
+    align-items: center;
+}
+
+#remember-me_input {
+    width: auto;
+}
+
 #authorization_header {
     background-color: chocolate;
     color: white;
