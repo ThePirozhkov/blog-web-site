@@ -35,6 +35,7 @@
         <p>Роль:</p>
         <h3 th:text="${user.getRole()}">Role</h3>
     </div>
+    <a th:if="${#authentication.name.equals(user.getUsername())}" th:href="@{delete}" id="a_delete">Удалить аккаунт</a>
     <div id="buttons" th:if="${#authentication.name.equals(user.getUsername())}">
         <a class="a_button" th:href="@{update}"><button>Изменить</button></a>
         <a class="a_button" th:href="@{update-password}"><button>Изменить пароль</button></a>

@@ -70,4 +70,9 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Cannot update pass"));
     }
 
+    public boolean deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return !userRepository.existsById(id);
+    }
+
 }

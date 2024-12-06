@@ -5,9 +5,10 @@ import by.baby.blogwebsite.util.HeaderUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +28,11 @@ public class MainPageController {
 
     @GetMapping
     public String mainPage(@RequestParam(defaultValue = "0") int page,
-                           HttpServletResponse response,
+                           @CurrentSecurityContext(expression = "authentication") Authentication authentication,
                            Model model) {
-
-        response.addHeader("Expires", HeaderUtil.getExpiresHeader(2));
-        response.addHeader("Pragma", "public");
-        response.addHeader("Cache-Control", HeaderUtil.getMaxAgeHeader(2));
+        if (httpSession.getAttribute("currentUser") == null && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
+            return "redirect:/login";
+        }
         model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         model.addAttribute("blogs", blogService.getBlogs(PageRequest.of(page, 14)));
         return "main/main";

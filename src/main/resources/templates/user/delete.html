@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Page</title>
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+    <link th:href="@{/css/user_delete.css}" rel="stylesheet">
+</head>
+<body>
+<div id="user_header">
+  <a id="a_logo" th:href="@{/main}">
+    <img id="logo" width="36" height="36" alt="logo" th:src="@{/images/logo.png}">
+  </a>
+  <h1 id="username_field">Пользователь <span th:text="${user.getUsername()}">User</span></h1>
+</div>
+<div id="info">
+    <h1 id="warning">Вы действительно хотите удалить аккаунт?</h1>
+    <div id="buttons">
+        <a id="no">
+            <button>Нет</button>
+        </a>
+        <a id="yes">
+            <form th:action="@{/user/delete}" method="post">
+                <input name="id" type="hidden" th:value="${currentUser.id}">
+                <button type="submit">Да</button>
+            </form>
+        </a>
+    </div>
+</div>
+</body>
+</html>

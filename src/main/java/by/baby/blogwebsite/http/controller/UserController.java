@@ -5,6 +5,7 @@ import by.baby.blogwebsite.dto.UpdateUserDto;
 import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.service.ImageService;
 import by.baby.blogwebsite.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -148,6 +150,29 @@ public class UserController {
         response.addHeader("Pragma", "no-cache");
         response.addHeader("Expires", "0");
         return "redirect:/user/" + updateUser.getId() + "?updimg";
+    }
+
+    @GetMapping("/delete")
+    public String deleteUser(Model model) {
+        UserDto deleteUser = (UserDto) httpSession.getAttribute("user");
+        model.addAttribute("user", deleteUser);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
+        return "user/delete";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam Long id,
+                             @CurrentSecurityContext(expression = "authentication") Authentication authentication,
+                             HttpServletResponse httpServletResponse,
+                             HttpServletRequest httpServletRequest) {
+        boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            httpSession.removeAttribute("currentUser");
+            new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, authentication);
+            return "redirect:/logout";
+        } else {
+            return "redirect:/user/" + id;
+        }
     }
 
 }
