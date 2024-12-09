@@ -39,7 +39,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@SessionAttributes({"user", "currentUser"})
+@SessionAttributes("user")
 public class UserController {
 
     private final UserService userService;
@@ -49,32 +49,33 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String user(@PathVariable Long id,
+                       @SessionAttribute UserDto currentUser,
                        Model model) {
         UserDto user = userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         logger.info("User with id {} found", id);
-        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("user", user);
         return "user/user";
     }
 
     @GetMapping("/update")
-    public String updateUser(Model model) {
-        UserDto updateUser = (UserDto) httpSession.getAttribute("user");
-        logger.info("User {} need update", updateUser);
+    public String updateUser(@SessionAttribute UserDto user,
+                             Model model) {
+        logger.info("User {} need update", user);
         model.addAttribute("updateUserDto", new UpdateUserDto(
-                updateUser.getId(),
-                updateUser.getUsername(),
-                updateUser.getEmail()));
+                user.getId(),
+                user.getUsername(),
+                user.getEmail()));
         return "user/update";
     }
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute @Validated UpdateUserDto updateUserDto,
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication,
+                             @SessionAttribute UserDto currentUser,
                              BindingResult bindingResult,
                              Model model) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
         if (!Objects.equals(updateUserDto.getId(), currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -103,10 +104,10 @@ public class UserController {
     }
 
     @GetMapping("/update-password")
-    public String updatePass(Model model) {
-        UserDto updateUser = (UserDto) httpSession.getAttribute("user");
+    public String updatePass(@SessionAttribute UserDto user,
+                             Model model) {
         model.addAttribute("updatePassDto", new UpdatePassDto(
-                updateUser.getId(),
+                user.getId(),
                 null,
                 null,
                 null
@@ -119,9 +120,9 @@ public class UserController {
 
     @PostMapping("/update-password")
     public String updatePass(@ModelAttribute @Validated UpdatePassDto updatePassDto,
+                             @SessionAttribute UserDto currentUser,
                              BindingResult bindingResult,
                              Model model) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
         if (!Objects.equals(updatePassDto.getId(), currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -140,46 +141,42 @@ public class UserController {
     }
 
     @GetMapping("/update-image")
-    public String updateImage(Model model) {
-        UserDto updateUser = (UserDto) httpSession.getAttribute("user");
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
-        if (!Objects.equals(updateUser.getId(), currentUser.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
-        model.addAttribute("user", updateUser);
+    public String updateImage(@SessionAttribute UserDto currentUser,
+                              Model model) {
+        model.addAttribute("user", currentUser);
         return "user/update-image";
     }
 
 
     @PostMapping("/update-image")
-    public String updateImage(
-            @RequestParam MultipartFile avatar) {
-        UserDto updateUser = (UserDto) httpSession.getAttribute("user");
+    public String updateImage(@RequestParam MultipartFile avatar,
+                              @SessionAttribute UserDto currentUser) {
         try {
             imageService.saveAvatar(
                     avatar.getBytes(),
-                    "avatar-" + updateUser.getId() + "." + FilenameUtils.getExtension(avatar.getOriginalFilename()),
-                    updateUser.getId());
+                    "avatar-" + currentUser.getId() + "." + FilenameUtils.getExtension(avatar.getOriginalFilename()),
+                    currentUser.getId());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/user/" + updateUser.getId() + "?updimg";
+        return "redirect:/user/" + currentUser.getId() + "?updimg";
     }
 
     @GetMapping("/delete")
-    public String deleteUser(Model model) {
-        UserDto deleteUser = (UserDto) httpSession.getAttribute("user");
-        model.addAttribute("user", deleteUser);
-        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
+    public String deleteUser(@SessionAttribute UserDto currentUser,
+                             @SessionAttribute UserDto user,
+                             Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("currentUser", currentUser);
         return "user/delete";
     }
 
     @PostMapping("/delete")
     public String deleteUser(@RequestParam Long id,
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication,
+                             @SessionAttribute UserDto currentUser,
                              HttpServletResponse httpServletResponse,
                              HttpServletRequest httpServletRequest) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
         if (!Objects.equals(id, currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

@@ -4,10 +4,9 @@ import by.baby.blogwebsite.dto.BlogDto;
 import by.baby.blogwebsite.dto.CreateBlogDto;
 import by.baby.blogwebsite.dto.UpdateBlogDto;
 import by.baby.blogwebsite.dto.UserDto;
-import by.baby.blogwebsite.repository.BlogRepository;
 import by.baby.blogwebsite.repository.LikeRepository;
 import by.baby.blogwebsite.service.BlogService;
-import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,34 +19,25 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/blog")
-@SessionAttributes({"user"})
+@RequiredArgsConstructor
+@SessionAttributes("blog")
 public class BlogController {
 
-    private final HttpSession httpSession;
     private final BlogService blogService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(BlogController.class);
     private final LikeRepository likeRepository;
-    private final BlogRepository blogRepository;
-
-    public BlogController(HttpSession httpSession, BlogService blogService, LikeRepository likeRepository, BlogRepository blogRepository) {
-        this.httpSession = httpSession;
-        this.blogService = blogService;
-        this.likeRepository = likeRepository;
-        this.blogRepository = blogRepository;
-    }
 
     @GetMapping("/{id}")
     public String blog(@PathVariable Long id,
+                       @SessionAttribute UserDto currentUser,
                        Model model) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
-        BlogDto currentBlog = blogService.getBlogById(id)
+        BlogDto blog = blogService.getBlogById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
-        model.addAttribute("blog", currentBlog);
+        model.addAttribute("blog", blog);
         model.addAttribute("currentUser", currentUser);
 
-        httpSession.setAttribute("blog", currentBlog);
 
         if (currentUser != null) {
             model.addAttribute("liked", likeRepository.existsByBlogIdAndUserId(id, currentUser.getId()));
@@ -58,32 +48,37 @@ public class BlogController {
     }
 
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
+    public String create(@SessionAttribute UserDto currentUser,
+                         Model model) {
+        model.addAttribute("currentUser", currentUser);
         return "blog/create-blog";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute CreateBlogDto dto) {
+    public String create(@SessionAttribute UserDto currentUser,
+                         @ModelAttribute CreateBlogDto dto) {
         LOGGER.info("Create blog: {}", dto);
+        if (!Objects.equals(currentUser.getId(), dto.getCreatorId())) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
         BlogDto createdBlog = blogService.createBlog(dto);
         return "redirect:/blog/" + createdBlog.getId();
     }
 
     @GetMapping("/update")
-    public String update(Model model) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
-        BlogDto currentBlog = (BlogDto) httpSession.getAttribute("blog");
+    public String update(@SessionAttribute UserDto currentUser,
+                         @SessionAttribute BlogDto blog,
+                         Model model) {
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentBlog", currentBlog);
+        model.addAttribute("currentBlog", blog);
         return "blog/update-blog";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute UpdateBlogDto dto) {
-        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
-        BlogDto currentBlog = (BlogDto) httpSession.getAttribute("blog");
-        if (!Objects.equals(currentUser.getId(), currentBlog.getAuthor().getId())) {
+    public String update(@SessionAttribute UserDto currentUser,
+                         @SessionAttribute BlogDto blog,
+                         @ModelAttribute UpdateBlogDto dto) {
+        if (!Objects.equals(currentUser.getId(), blog.getAuthor().getId())) {
             throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
         blogService.updateBlog(dto, dto.getBlogId());

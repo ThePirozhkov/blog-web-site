@@ -1,5 +1,6 @@
 package by.baby.blogwebsite.http.controller;
 
+import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.service.BlogService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +10,11 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/main")
 @RequiredArgsConstructor
-@SessionAttributes({"currentUser"})
 public class MainPageController {
 
     private final BlogService blogService;
