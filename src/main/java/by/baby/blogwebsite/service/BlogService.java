@@ -38,10 +38,9 @@ public class BlogService {
                 .orElseThrow(() -> new RuntimeException("Unable to find any blogs"));
     }
 
-    public BlogDto getBlogById(Long id) {
-        return blogDtoMapper.mapToBlogDto(blogRepository.
-                findById(id)
-                .orElseThrow(() -> new RuntimeException("Unable to find blog by id: " + id)));
+    public Optional<BlogDto> getBlogById(Long id) {
+        return blogRepository.findById(id)
+                .map(blogDtoMapper::mapToBlogDto);
     }
 
     public BlogDto createBlog(CreateBlogDto blogDto) {

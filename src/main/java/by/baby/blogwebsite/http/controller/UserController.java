@@ -32,8 +32,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/user")
@@ -73,6 +75,10 @@ public class UserController {
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication,
                              BindingResult bindingResult,
                              Model model) {
+        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
+        if (!Objects.equals(updateUserDto.getId(), currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         List<String> errors = bindingResult.getAllErrors()
                 .stream()
                 .map(ObjectError::getCode)
@@ -114,7 +120,12 @@ public class UserController {
 
     @PostMapping("/update-password")
     public String updatePass(@ModelAttribute @Validated UpdatePassDto updatePassDto,
-                             BindingResult bindingResult, Model model) {
+                             BindingResult bindingResult,
+                             Model model) {
+        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
+        if (!Objects.equals(updatePassDto.getId(), currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         List<String> errors = bindingResult.getAllErrors()
                 .stream()
                 .map(ObjectError::getCode)
@@ -132,23 +143,27 @@ public class UserController {
     @GetMapping("/update-image")
     public String updateImage(Model model) {
         UserDto updateUser = (UserDto) httpSession.getAttribute("user");
+        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
+        if (!Objects.equals(updateUser.getId(), currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         model.addAttribute("user", updateUser);
         return "user/update-image";
     }
 
-    @SneakyThrows
+
     @PostMapping("/update-image")
     public String updateImage(
-            @RequestParam MultipartFile avatar,
-            HttpServletResponse response) {
+            @RequestParam MultipartFile avatar) {
         UserDto updateUser = (UserDto) httpSession.getAttribute("user");
-        imageService.saveAvatar(
-                avatar.getBytes(),
-                "avatar-" + updateUser.getId() + "." + FilenameUtils.getExtension(avatar.getOriginalFilename()),
-                updateUser.getId());
-        response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.addHeader("Pragma", "no-cache");
-        response.addHeader("Expires", "0");
+        try {
+            imageService.saveAvatar(
+                    avatar.getBytes(),
+                    "avatar-" + updateUser.getId() + "." + FilenameUtils.getExtension(avatar.getOriginalFilename()),
+                    updateUser.getId());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return "redirect:/user/" + updateUser.getId() + "?updimg";
     }
 
@@ -165,6 +180,10 @@ public class UserController {
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication,
                              HttpServletResponse httpServletResponse,
                              HttpServletRequest httpServletRequest) {
+        UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
+        if (!Objects.equals(id, currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         boolean deleted = userService.deleteUser(id);
         if (deleted) {
             httpSession.removeAttribute("currentUser");

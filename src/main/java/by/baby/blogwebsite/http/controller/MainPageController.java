@@ -1,8 +1,6 @@
 package by.baby.blogwebsite.http.controller;
 
 import by.baby.blogwebsite.service.BlogService;
-import by.baby.blogwebsite.util.HeaderUtil;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +32,7 @@ public class MainPageController {
             return "redirect:/login";
         }
         model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
-        model.addAttribute("blogs", blogService.getBlogs(PageRequest.of(page, 14)));
+        model.addAttribute("blogs", blogService.getBlogs(PageRequest.of(page, 12)));
         return "main/main";
     }
 

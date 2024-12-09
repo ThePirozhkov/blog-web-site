@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,18 +42,14 @@ public class UserEntity {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
+
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BlogEntity> blogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<LikeEntity> likes = new ArrayList<>();
-
-    public UserEntity(Role role, String email, String password, String username) {
-        this.role = role;
-        this.email = email;
-        this.password = password;
-        this.username = username;
-    }
 
     public UserEntity(Role role, String email, String password, String username, String avatar) {
         this.role = role;
@@ -65,5 +62,6 @@ public class UserEntity {
     @PrePersist
     protected void onCreate() {
         this.restoreKey = UUID.randomUUID().toString();
+        this.createdAt = new Date();
     }
 }

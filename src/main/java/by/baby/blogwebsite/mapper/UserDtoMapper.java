@@ -43,7 +43,8 @@ public class UserDtoMapper {
                         user.getAvatar(),
                         user.getBlogs().size(),
                         user.getLikes().stream().map(likeDtoMapper::mapToDto).toList(),
-                        amountLikes.getCount()))
+                        amountLikes.getCount(),
+                        user.getCreatedAt()))
                 .orElseThrow(() -> new RuntimeException("User not mapped"));
     }
 

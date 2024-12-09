@@ -19,3 +19,5 @@ databaseChangeLog:
       file: db/changelog/v1.3.1/delete-token-table.sql
   - include:
       file: db/changelog/v1.3.2/create-token-table.sql
+  - include:
+      file: db/changelog/v1.3.3/alter-table-add-column-created-at.sql

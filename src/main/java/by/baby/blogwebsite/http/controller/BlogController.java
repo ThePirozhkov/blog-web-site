@@ -3,16 +3,16 @@ package by.baby.blogwebsite.http.controller;
 import by.baby.blogwebsite.dto.BlogDto;
 import by.baby.blogwebsite.dto.CreateBlogDto;
 import by.baby.blogwebsite.dto.UserDto;
-import by.baby.blogwebsite.repository.BlogRepository;
 import by.baby.blogwebsite.repository.LikeRepository;
-import by.baby.blogwebsite.repository.UserRepository;
 import by.baby.blogwebsite.service.BlogService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 @RequestMapping("/blog")
@@ -25,7 +25,7 @@ public class BlogController {
     private final Logger LOGGER = LoggerFactory.getLogger(BlogController.class);
     private final LikeRepository likeRepository;
 
-    public BlogController(HttpSession httpSession, BlogService blogService, LikeRepository likeRepository, UserRepository userRepository) {
+    public BlogController(HttpSession httpSession, BlogService blogService, LikeRepository likeRepository) {
         this.httpSession = httpSession;
         this.blogService = blogService;
         this.likeRepository = likeRepository;
@@ -35,7 +35,8 @@ public class BlogController {
     public String blog(@PathVariable Long id,
                        Model model) {
         UserDto currentUser = (UserDto) httpSession.getAttribute("currentUser");
-        BlogDto currentBlog = blogService.getBlogById(id);
+        BlogDto currentBlog = blogService.getBlogById(id)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
         model.addAttribute("blog", currentBlog);
         model.addAttribute("currentUser", currentUser);

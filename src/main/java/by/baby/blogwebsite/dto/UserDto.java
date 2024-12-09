@@ -3,6 +3,7 @@ package by.baby.blogwebsite.dto;
 import by.baby.blogwebsite.enums.Role;
 import lombok.Value;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,4 +19,5 @@ public class UserDto {
     Integer blogsAmount;
     List<LikeDto> likes;
     Long amountLikes;
+    Date createdAt;
 }
