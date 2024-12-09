@@ -2,13 +2,40 @@
     margin: 0;
 }
 
+body {
+    background-image: url("/images/main_background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
 a {
     text-decoration: none;
     color: white;
 }
 
+#update:hover {
+    color: dimgray;
+    cursor: pointer;
+}
+
+#delete:hover {
+    color: dimgray;
+    cursor: pointer;
+}
+
 #blog {
     display: flex;
+}
+
+#delete_update {
+    display: flex;
+    margin: 10px;
+}
+
+#update {
+    margin-right: 10px;
 }
 
 #title_blog {
@@ -87,4 +114,8 @@ a {
 #author_username {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+#buttons {
+    justify-content: space-between;
 }

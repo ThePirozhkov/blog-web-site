@@ -2,6 +2,7 @@ package by.baby.blogwebsite.service;
 
 import by.baby.blogwebsite.dto.BlogDto;
 import by.baby.blogwebsite.dto.CreateBlogDto;
+import by.baby.blogwebsite.dto.UpdateBlogDto;
 import by.baby.blogwebsite.mapper.BlogDtoMapper;
 import by.baby.blogwebsite.persistence.entity.BlogEntity;
 import by.baby.blogwebsite.repository.BlogRepository;
@@ -56,7 +57,19 @@ public class BlogService {
                 })
                 .map(blogRepository::save)
                 .map(blogDtoMapper::mapToBlogDto)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Cannot create blog"));
+    }
+
+    public BlogDto updateBlog(UpdateBlogDto blogDto, Long id) {
+        return blogRepository.findById(id)
+                .map(blogEntity -> {
+                    blogEntity.setTitle(blogDto.getTitle());
+                    blogEntity.setContent(blogDto.getContent());
+                    return blogEntity;
+                })
+                .map(blogRepository::save)
+                .map(blogDtoMapper::mapToBlogDto)
+                .orElseThrow(() -> new RuntimeException("Cannot update blog"));
     }
 
 }

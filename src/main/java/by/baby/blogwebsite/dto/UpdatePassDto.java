@@ -12,7 +12,7 @@ import lombok.Data;
 @CheckOldPassword
 @CheckNewPassword
 @ConfirmPasswordUPD
-public class UpdatePassDto {
+public final class UpdatePassDto {
     private Long id;
     private String oldPassword;
     @Size(min = 8, max = 40, message = "Длина пароля должна быть в диапазоне от 8 до 40!")

@@ -24,16 +24,22 @@
         <h1 id="title_blog" th:text="${blog.title}">Title</h1>
         <p id="blog_content" th:text="${blog.content}">Content</p>
         <p id="likes">Понравилось: <span th:text="${blog.likes.size()}">Likes</span></p>
-        <form th:if="${!liked && !#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}" th:action="@{/like}" method="post">
-            <input type="hidden" name="blogId" th:value="${blog.getId()}">
-            <input type="hidden" name="userId" th:value="${currentUser.id}">
-            <button class="like_unlike" id="like" type="submit">Лайк</button>
-        </form>
-        <form th:if="${liked && !#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}" th:action="@{/like/unlike}" method="post">
-            <input type="hidden" name="blogId" th:value="${blog.getId()}">
-            <input type="hidden" name="userId" th:value="${currentUser.id}">
-            <button class="like_unlike" id="unlike" type="submit">Убрать лайк</button>
-        </form>
+        <div id="buttons" th:if="${!#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}">
+            <form th:if="${!liked}" th:action="@{/like}" method="post">
+                <input type="hidden" name="blogId" th:value="${blog.getId()}">
+                <input type="hidden" name="userId" th:value="${currentUser.id}">
+                <button class="like_unlike" id="like" type="submit">Лайк</button>
+            </form>
+            <form th:if="${liked}" th:action="@{/like/unlike}" method="post">
+                <input type="hidden" name="blogId" th:value="${blog.getId()}">
+                <input type="hidden" name="userId" th:value="${currentUser.id}">
+                <button class="like_unlike" id="unlike" type="submit">Убрать лайк</button>
+            </form>
+            <div th:if="${currentUser.getId()==blog.author.getId()}" id="delete_update">
+                <a th:href="@{/blog/update}" id="update">Обновить</a>
+                <a id="delete">Удалить</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

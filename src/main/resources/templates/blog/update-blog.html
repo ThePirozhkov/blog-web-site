@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Update blog</title>
+    <link th:href="@{/css/update_blog.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/fragment.html :: main_head (user = ${currentUser})}"></div>
+<div id="update">
+  <form id="update_form" th:action="@{update}" method="post">
+    <input type="hidden" name="blogId" th:value="${currentBlog.id}">
+    <p>Заголовок</p>
+    <label>
+      <input id="title_form" name="title" type="text" th:value="${currentBlog.title}">
+    </label>
+    <p>Содержание</p>
+    <label>
+      <textarea id="content_form" name="content" th:text="${currentBlog.content}"></textarea>
+    </label>
+    <button id="update_button" type="submit">Изменить блог</button>
+  </form>
+</div>
+</body>
+</html>

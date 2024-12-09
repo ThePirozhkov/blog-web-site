@@ -69,7 +69,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
-    height: 100vh;
+    height: min-content;
 }
 
 .content_preview {

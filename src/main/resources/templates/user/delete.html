@@ -16,7 +16,7 @@
 <div id="info">
     <h1 id="warning">Вы действительно хотите удалить аккаунт?</h1>
     <div id="buttons">
-        <a id="no">
+        <a th:href="@{/user/{id}(id = ${currentUser.id})}" id="no">
             <button>Нет</button>
         </a>
         <a id="yes">
