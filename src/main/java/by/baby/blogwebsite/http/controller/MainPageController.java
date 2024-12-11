@@ -1,6 +1,5 @@
 package by.baby.blogwebsite.http.controller;
 
-import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.service.BlogService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

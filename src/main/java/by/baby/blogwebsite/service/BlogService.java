@@ -72,4 +72,13 @@ public class BlogService {
                 .orElseThrow(() -> new RuntimeException("Cannot update blog"));
     }
 
+    public boolean deleteBlog(Long id) {
+        blogRepository.deleteById(id);
+        if (blogRepository.existsById(id)) {
+            return true;
+        } else {
+            throw new RuntimeException("Unable to delete blog");
+        }
+    }
+
 }

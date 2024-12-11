@@ -72,7 +72,11 @@ public class UserService {
 
     public boolean deleteUser(Long id) {
         userRepository.deleteById(id);
-        return !userRepository.existsById(id);
+        if (userRepository.existsById(id)) {
+            return true;
+        } else {
+            throw new RuntimeException("Cannot delete user");
+        }
     }
 
 }

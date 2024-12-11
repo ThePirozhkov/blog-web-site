@@ -16,12 +16,12 @@ a {
 }
 
 #update:hover {
-    color: dimgray;
+    color: black;
     cursor: pointer;
 }
 
 #delete:hover {
-    color: dimgray;
+    color: black;
     cursor: pointer;
 }
 
@@ -36,6 +36,11 @@ a {
 
 #update {
     margin-right: 10px;
+    color: dimgray;
+}
+
+#delete {
+    color: dimgray;
 }
 
 #title_blog {

@@ -37,7 +37,7 @@
             </form>
             <div th:if="${currentUser.getId()==blog.author.getId()}" id="delete_update">
                 <a th:href="@{/blog/update}" id="update">Обновить</a>
-                <a id="delete">Удалить</a>
+                <a th:href="@{/blog/delete}" id="delete">Удалить</a>
             </div>
         </div>
     </div>

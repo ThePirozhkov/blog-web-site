@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Page</title>
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+    <link th:href="@{/css/delete.css}" rel="stylesheet">
+</head>
+<body>
+<div id="info">
+    <h1 id="warning">Вы действительно хотите удалить блог?</h1>
+    <div id="buttons">
+        <a th:href="@{/blog/{id}(id = ${currentBlog.id})}" id="no">
+            <button>Нет</button>
+        </a>
+        <a id="yes">
+            <form th:action="@{/blog/delete}" method="post">
+                <input name="id" type="hidden" th:value="${currentBlog.id}">
+                <button type="submit">Да</button>
+            </form>
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class BlogController {
 
     @GetMapping("/{id}")
     public String blog(@PathVariable Long id,
-                       @SessionAttribute UserDto currentUser,
+                       @SessionAttribute(required = false) UserDto currentUser,
                        Model model) {
         BlogDto blog = blogService.getBlogById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
@@ -83,6 +83,26 @@ public class BlogController {
         }
         blogService.updateBlog(dto, dto.getBlogId());
         return "redirect:/blog/" + dto.getBlogId();
+    }
+
+    @GetMapping("/delete")
+    public String delete(@SessionAttribute BlogDto blog,
+                         @SessionAttribute UserDto currentUser,
+                         Model model) {
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentBlog", blog);
+        return "blog/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam Long id,
+                         @SessionAttribute BlogDto blog,
+                         @SessionAttribute UserDto currentUser) {
+        if (!Objects.equals(currentUser.getId(), blog.getAuthor().getId())) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
+        blogService.deleteBlog(id);
+        return "redirect:/main";
     }
 
 }
