@@ -33,9 +33,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
     private final BlogDtoMapper blogDtoMapper;
     private final UserRepository userRepository;
-    private final RedisTemplate<String, Object> redisTemplate;
     private final BlogCacheService blogCacheService;
-    private final RedisCacheManager cacheManager;
 
     @PostConstruct
     void init() {

@@ -6,7 +6,6 @@ import by.baby.blogwebsite.dto.UpdateBlogDto;
 import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.repository.LikeRepository;
 import by.baby.blogwebsite.service.BlogService;
-import by.baby.blogwebsite.service.cache.BlogCacheService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
