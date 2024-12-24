@@ -1,7 +1,6 @@
 package by.baby.blogwebsite.service.cache;
 
 import by.baby.blogwebsite.dto.BlogDto;
-import by.baby.blogwebsite.dto.UserDto;
 import by.baby.blogwebsite.mapper.BlogDtoMapper;
 import by.baby.blogwebsite.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;

@@ -49,7 +49,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String user(@PathVariable Long id,
-                       @SessionAttribute UserDto currentUser,
+                       @SessionAttribute(required = false) UserDto currentUser,
                        Model model) {
         UserDto user = userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
