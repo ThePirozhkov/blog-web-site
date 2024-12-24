@@ -7,25 +7,41 @@ import by.baby.blogwebsite.mapper.BlogDtoMapper;
 import by.baby.blogwebsite.persistence.entity.BlogEntity;
 import by.baby.blogwebsite.repository.BlogRepository;
 import by.baby.blogwebsite.repository.UserRepository;
+import by.baby.blogwebsite.service.cache.BlogCacheService;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@CacheConfig(cacheNames = "blogCache")
+@Slf4j
 public class BlogService {
 
     private final BlogRepository blogRepository;
     private final BlogDtoMapper blogDtoMapper;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final BlogCacheService blogCacheService;
+    private final RedisCacheManager cacheManager;
 
-    public BlogService(BlogRepository blogRepository, BlogDtoMapper blogDtoMapper, UserRepository userRepository) {
-        this.blogRepository = blogRepository;
-        this.blogDtoMapper = blogDtoMapper;
-        this.userRepository = userRepository;
+    @PostConstruct
+    void init() {
+        log.info("blogRepo : {}", blogRepository);
     }
+
 
     public PageImpl<BlogDto> getBlogs(Pageable pageable) {
         return Optional.ofNullable(blogRepository.findAllByOrderByCreatedAtDesc(pageable))
@@ -39,9 +55,13 @@ public class BlogService {
                 .orElseThrow(() -> new RuntimeException("Unable to find any blogs"));
     }
 
+    @CacheEvict(condition = "@blogRepository.existsByIdAndPopular(#id, false)")
+    @Cacheable(unless = "@blogRepository.existsByIdAndPopular(#id, false)")
     public Optional<BlogDto> getBlogById(Long id) {
-        return blogRepository.findById(id)
-                .map(blogDtoMapper::mapToBlogDto);
+        BlogDto blogDto = blogRepository.findById(id)
+                .map(blogDtoMapper::mapToBlogDto)
+                .orElseThrow(() -> new RuntimeException("Unable to find blog by id: " + id));
+        return Optional.of(blogDto);
     }
 
     public BlogDto createBlog(CreateBlogDto blogDto) {
@@ -60,8 +80,9 @@ public class BlogService {
                 .orElseThrow(() -> new RuntimeException("Cannot create blog"));
     }
 
+    @CachePut(key = "#id")
     public BlogDto updateBlog(UpdateBlogDto blogDto, Long id) {
-        return blogRepository.findById(id)
+        BlogDto blog = blogRepository.findById(id)
                 .map(blogEntity -> {
                     blogEntity.setTitle(blogDto.getTitle());
                     blogEntity.setContent(blogDto.getContent());
@@ -70,15 +91,14 @@ public class BlogService {
                 .map(blogRepository::save)
                 .map(blogDtoMapper::mapToBlogDto)
                 .orElseThrow(() -> new RuntimeException("Cannot update blog"));
+        blogCacheService.updInCacheBlogs();
+        return blog;
     }
 
+    @CacheEvict(key = "#id")
     public boolean deleteBlog(Long id) {
         blogRepository.deleteById(id);
-        if (blogRepository.existsById(id)) {
-            return true;
-        } else {
-            throw new RuntimeException("Unable to delete blog");
-        }
+        return true;
     }
 
 }

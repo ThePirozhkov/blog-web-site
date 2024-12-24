@@ -1,14 +1,19 @@
 package by.baby.blogwebsite.dto;
 
 import by.baby.blogwebsite.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
 @Value
-public class UserDto {
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
+public class UserDto implements Serializable {
     Long id;
     String username;
     String password;

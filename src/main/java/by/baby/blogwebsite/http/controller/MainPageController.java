@@ -1,6 +1,7 @@
 package by.baby.blogwebsite.http.controller;
 
 import by.baby.blogwebsite.service.BlogService;
+import by.baby.blogwebsite.service.cache.BlogCacheService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,7 @@ public class MainPageController {
 
     private final BlogService blogService;
     private final HttpSession httpSession;
+    private final BlogCacheService blogCacheService;
 
 
     @GetMapping
@@ -27,6 +29,7 @@ public class MainPageController {
         if (httpSession.getAttribute("currentUser") == null && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
             return "redirect:/login";
         }
+        model.addAttribute("popBlogs", blogCacheService.getAllInCacheBlogs());
         model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         model.addAttribute("blogs", blogService.getBlogs(PageRequest.of(page, 12)));
         return "main/main";

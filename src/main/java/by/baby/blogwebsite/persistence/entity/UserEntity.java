@@ -3,6 +3,8 @@ package by.baby.blogwebsite.persistence.entity;
 import by.baby.blogwebsite.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,10 +47,15 @@ public class UserEntity {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
+    @Column(name = "popular", nullable = false)
+    private boolean popular;
+
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<BlogEntity> blogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<LikeEntity> likes = new ArrayList<>();
 
     public UserEntity(Role role, String email, String password, String username, String avatar) {

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     Optional<LikeEntity> findByBlogIdAndUserId(Long blogId, Long userId);
     boolean existsByBlogIdAndUserId(Long blogId, Long userId);
+
 }

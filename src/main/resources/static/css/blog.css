@@ -10,6 +10,10 @@ body {
     margin: 0;
 }
 
+.disable {
+    display: none;
+}
+
 a {
     text-decoration: none;
     color: white;
@@ -54,6 +58,10 @@ a {
     margin-left: 10px;
     margin-bottom: 10px;
     color: dimgray;
+}
+
+#pop {
+    margin-right: 10px;
 }
 
 .like_unlike {

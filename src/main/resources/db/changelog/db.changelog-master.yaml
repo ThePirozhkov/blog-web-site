@@ -21,3 +21,7 @@ databaseChangeLog:
       file: db/changelog/v1.3.2/create-token-table.sql
   - include:
       file: db/changelog/v1.3.3/alter-table-add-column-created-at.sql
+  - include:
+      file: db/changelog/v1.3.4/add-popular-column.sql
+  - include:
+      file: db/changelog/v1.3.4/add-popular-column-blog.sql

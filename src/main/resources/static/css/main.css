@@ -2,6 +2,27 @@
     margin: 0;
 }
 
+p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#mb_title {
+    text-align: center;
+    margin: 10px;
+    color: dimgray;
+}
+
+#a_pop_blog {
+    text-decoration: none;
+    color: chocolate;
+    margin: 5px;
+}
+
+#a_pop_blog:hover {
+    color: #a14d17;
+}
+
 body {
     background-image: url("/images/main_background.jpg");
     background-size: cover;
@@ -56,12 +77,18 @@ body {
     background-color: lightgray;
     border: black 1px solid;
     width: 30%;
+    overflow: hidden;
+    max-height: min-content;
 }
 
 #page_buttons {
     display: flex;
     justify-content: space-between;
     padding-right: 10px;
+}
+
+.pop_blog {
+    max-width: inherit;
 }
 
 #container {

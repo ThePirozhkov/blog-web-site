@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Date;
 import java.util.List;
@@ -31,11 +33,15 @@ public class BlogEntity {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @ManyToOne
+    @Column(name = "popular", nullable = false)
+    private boolean popular;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private UserEntity creator;
 
     @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<LikeEntity> likes;
 
     @PrePersist

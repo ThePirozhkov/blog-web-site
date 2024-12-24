@@ -2,6 +2,7 @@ package by.baby.blogwebsite.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 @Entity
 @NoArgsConstructor

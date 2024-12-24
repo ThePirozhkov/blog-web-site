@@ -24,7 +24,7 @@
         <h1 id="title_blog" th:text="${blog.title}">Title</h1>
         <p id="blog_content" th:text="${blog.content}">Content</p>
         <p id="likes">Понравилось: <span th:text="${blog.likes.size()}">Likes</span></p>
-        <div id="buttons" th:if="${!#authentication.authorities.contains('ROLE_ANONYMOUS') && currentUser != null}">
+        <div id="buttons" th:unless="${#authorization.expression('hasAuthority(''ROLE_ANONYMOUS'')') && currentUser == null}">
             <form th:if="${!liked}" th:action="@{/like}" method="post">
                 <input type="hidden" name="blogId" th:value="${blog.getId()}">
                 <input type="hidden" name="userId" th:value="${currentUser.id}">
@@ -35,6 +35,16 @@
                 <input type="hidden" name="userId" th:value="${currentUser.id}">
                 <button class="like_unlike" id="unlike" type="submit">Убрать лайк</button>
             </form>
+            <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" id="pop_pop">
+                <form th:action="@{/pop/{id}(id = ${blog.getId()})}" method="post"
+                      th:if="${!blog.isPopular()}">
+                    <button class="like_unlike" id="pop" type="submit">Сделать популярным</button>
+                </form>
+                <form th:action="@{/delpop/{id}(id = ${blog.getId()})}" method="post"
+                      th:if="${blog.isPopular()}">
+                    <button class="like_unlike" id="delpop" type="submit">Убрать популярность</button>
+                </form>
+            </div>
             <div th:if="${currentUser.getId()==blog.author.getId()}" id="delete_update">
                 <a th:href="@{/blog/update}" id="update">Обновить</a>
                 <a th:href="@{/blog/delete}" id="delete">Удалить</a>

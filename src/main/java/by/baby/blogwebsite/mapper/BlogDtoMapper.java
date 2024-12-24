@@ -27,7 +27,8 @@ public class BlogDtoMapper {
                 blogEntity.getContent(),
                 blogEntity.getCreatedAt(),
                 userDtoMapper.mapToUserDto(blogEntity.getCreator()),
-                blogEntity.getLikes().stream().map(likeDtoMapper::mapToDto).toList()
+                blogEntity.getLikes().stream().map(likeDtoMapper::mapToDto).toList(),
+                blogEntity.isPopular()
         ))
                 .orElseThrow(() -> new RuntimeException("Blog not mapped"));
     }
